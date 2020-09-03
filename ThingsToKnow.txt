@@ -1,0 +1,116 @@
+Well my good old LGA775 - 2008 pc is dying because bad electricity system in my anthillish hive.
+It happens twice at this week.
+The shitty electricity system is making overall pulsation in room sockets and destroying electronics for years (almost 19 years).
+PSU is helping a bit. But my UPS is a long dead thing and they're to expansive for using with 850 or 1KW PSUs.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Motherboards have a lot of components but only 3 of them are them most vulnerable:
+
+1. Network controllers.
+Internal Network controllers are true zombies.
+They're becoming unresponsible from time to time and triggering The BLUE Screen.
+But in my situation a half-dead network chip is impossible to initialize without using its internal ROM.
+So to use my network controller I have to reorganize my BIOS boot list and place the network ROM firmware on top.
+Does it help a lot ? Not too much.
+If I'm using it for a long time by watching streams or youtube videos my performance is dropping to its minimum.
+That's the perfect example of a chip degragation.
+You may think it's about oveheating. But no. Passive cooling system is attached to it.
+
+How to fix: Use an external pci-e network controller if possible and delete all drivers for the bad one.
+
+
+2. South Bridge and SATA Controller.
+Bad news - you don't know what is really degrade first.
+You think - fuck my hdd/ssd or a disk drive (yeah I'm still using the BLUE RAY one) is dying but no.
+It's a half true - your hdd/disk drive might be damaged too but only 
+because of bad internal power system of SB and SATA controller.
+
+The symptoms are:
+- Long and unresponsive BIOS loading;
+- Unable to identify all attached SATA and USB devices;
+[Including their names and serial numbers in the boot menu];
+- The operating system is stuck on its loading/boot screen without blue screens;
+- You have very unresponsive windows explorer;
+- It also degrades performance.
+
+Hot fix: Buy SATAtoUSB adapaters and attach your old and slow or new hdd to USB ports.
+It should help to decrease these hardware fails to minimum.
+
+3. Audio controllers.
+
+The symptoms are:
+Almost the same as for network controllers but you don't have a sound device.
+
+How to fix: By using an external usb or pci-e device.
+
+
+RAM problems:
+All RAM problems because of - low power (time to replace your PSU), bad overclocking or bad sticks.
+
+How to fix: If you have read/write errors when you just start the software you're always using -
+it's time to replase one of the stick. But first - test it. One by one. 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+As you can see -> Motherboards are Frankensteins and still working even with bad components attached.
+
+If you have your old PC - test it for hardware fails periodically.
+
+If you really want to test your HDD/SSD for bad sectors you should have a SataToUSB adapter and
+a working PC (low TDP laptops are very good as testing machines at this point).
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Now my last words here:
+Well after the incident with my father (I hate him) I broke up with my higher education in 2012.
+Then russian army. But in 2013 I've tried to go back to my technical university.
+In shirt - FUCK you - they said. The academic difference between my previous specialty and
+the current one I want to study is completely different. But that is not true.
+I broke up at the 4th year. Physics, maths and computer science and graphics. 
+All things are same. I knew it. 
+You know what's the problem, right ? 
+Corruption. 
+No budget place for me and at the same time the cost of education was extremely high (x2,5 than average salary even before fucking Crimea and coronavirus shit).
+So I was completely kicked off.
+All of the top fuckin university stuff want some money from you. 
+Including professors, lecturers and other sorts of shit. 
+They're manipulating you cuz if you're kicked off - welcode to Russian army - the worst and useless time in your life.
+You can't complete your education without wasting your money.
+Education system in Russia is completely rotten. 
+It's a slicy better in other regions in Russia. But overall is full of shit.
+
+I'm unemployed and in fuckin Russia especially in Moscow I can't find a job from 2017.
+Employing system in Russia is almost the same as the education one but with some interesting things to know:
+
+- The most valuable vacancies are always hidden, average too. Why ? The answer is next.
+- If you don't have money to buy a better place to work - fuck off (Yeah. In Russia corruption is everywhere).
+- If you're not a student - fuck off  [Discrimination by age]
+- If you're not a well-educated student - fuck off [Discrimination by grades]
+- If your education is irrelevant/not from the place they want you to be graduated [Discrimination by university]
+If your education is irrelevant/not from the place they want you to be graduated
+- If you're nothing and they are literally don't know you.
+- There's no way to get a change for a job in top companies. Why ? Cronyism.
+We know him/her no matter how good they're as employees. But you're not a son of "Mister P" or "Missis J" so fuck off.
+- Dirty salaries. Over 80% of companies are manipulating with taxes. Clean salaries are very rare.
+[ For example: If your "salary" is 40000 russian roubles you will get only 18000-20000 
+and another part is envelope salaries and it's not for you if the company structure is based on Cronyism or they don't like you.]
+- Lying at employment to suck you in their corruption cronyism system
+[You're going to do all the job for the sons and daughters or if you're not a passive slave - they will kick you off].
+[As a bonus - your career in other companies will be in danger. The scums will try to make everything to achieve your unemployment for a long time].
+
+I was a freelancer before and doing a sysadmin/virus cleaning/hacking and reverse engineering stuff for money 
+but I just tired of this shit and you know working as a freelancer is very risky and the amount of degenerates around you is growing. 
+The most stupid one tried to hack me by sending viruses "for research". 
+So I've got my negative reputation on some hacking forums for refusing to work with such degenerates.
+No prepayment. I can't guarantee that I'm capable to do something. So the money question always was the last thing for me.
+
+I'm doing everything with passion cuz I like it. That what hobby is. But people are love to fuck your brain even if they got something for free.
+Yeah. I'm not tolerant to stupid, lazy people and timewasters.
+I'm always trying to fix the problem and always continue when I think that I can improve something more.
+No need to push me. Things changed and I didn't accepted requests. I don't want to get money from idiots and waste my time for nothing.
+
+I'm refusing to take money from my parents. 
+I've never ever asking to help me on such problem cuz I understand the price of money and how hard to get it.
+
+Only gifts from them are acceptible.
+So I'm in the situation when I can lost almost 14 years of my programming stuff and various researching dox, notes etc.
+I don't even remember how much times I did a backup from one HDD to another.
+
+So. My projects are not finished. My ideas are still in my heads. And nothing can stop me. They will be finished anyway.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Yeah. I know. My english is bad. But I'm living in Russia and I don't care. And only true idiots are blaming other people for using non-native languages improperly.
