@@ -32,7 +32,7 @@ The symptoms are:
 - You have very unresponsive windows explorer;
 - It also degrades performance.
 
-Hot fix: Buy SATAtoUSB adapaters and attach your old and slow or new hdd to USB ports.
+How to fix: Buy SATAtoUSB adapaters and attach your old and slow or new hdd to USB ports.
 It should help to decrease these hardware fails to minimum.
 
 3. Audio controllers.
