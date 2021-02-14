@@ -1,0 +1,34 @@
+object SettingsForm: TSettingsForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biMinimize, biMaximize]
+  BorderStyle = bsToolWindow
+  Caption = 'Settings'
+  ClientHeight = 56
+  ClientWidth = 216
+  Color = 33023
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 88
+    Top = 8
+    Width = 38
+    Height = 13
+    Caption = 'Interval'
+  end
+  object Edit1: TEdit
+    Left = 8
+    Top = 27
+    Width = 200
+    Height = 21
+    TabOrder = 0
+    Text = 'Edit1'
+  end
+end

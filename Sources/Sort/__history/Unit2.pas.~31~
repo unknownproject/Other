@@ -1,0 +1,111 @@
+unit Unit2;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+type
+  TForm2 = class(TForm)
+    Button1: TButton;
+    OpenDialog1: TOpenDialog;
+    Button2: TButton;
+    Memo1: TMemo;
+    Button3: TButton;
+    Button4: TButton;
+    Edit1: TEdit;
+    Button5: TButton;
+    SaveDialog1: TSaveDialog;
+    Memo2: TMemo;
+    Label1: TLabel;
+    Button6: TButton;
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form2: TForm2;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm2.Button1Click(Sender: TObject);
+begin
+if OpenDialog1.execute then
+Memo1.Lines.LoadFromFile(''+OpenDialog1.filename+'');
+end;
+
+procedure TForm2.Button2Click(Sender: TObject);
+var
+  t: TStringList;
+begin
+  // создаем
+  t:=TStringList.Create;
+  // присваиваем переменной t строки из Memo
+  t.AddStrings(memo1.lines);
+  // сортируем
+  t.Sort;
+  memo1.Clear;
+  // присваиваем memo уже отсортированные строки
+  memo1.Lines.AddStrings(t);
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+var
+i:integer;
+begin
+for i:=memo1.lines.count-1 downto 0 do
+begin
+if memo1.lines.strings[i]='' then
+memo1.lines.delete(i);
+end;
+end;
+
+procedure TForm2.Button4Click(Sender: TObject);
+var i,dlina:integer;
+    T:TStringList;
+begin
+  dlina:=StrToInt(Edit1.text); //минимальное кол-во символов
+  i:=0;
+  T:=TStringList.Create;
+  try
+   T.Text:=memo1.Text;
+   while i<T.Count do //перебираем все строки в цикле
+    if (length(T[i])<dlina) then
+      T.Delete(i) //если меньше символов в строке чем нужно - удаляем её
+    else
+      inc(i);
+   Memo2.Lines.Add(T.Text);    //выводим результат
+  finally
+   T.Free;
+  end;
+end;
+
+procedure TForm2.Button5Click(Sender: TObject);
+begin
+if SaveDialog1.Execute then
+   Memo1.Lines.SaveToFile(''+SaveDialog1.FileName+'');
+end;
+
+procedure TForm2.Button6Click(Sender: TObject);
+var
+i:integer;
+begin
+for i:=memo1.lines.count-1 downto 0 do
+begin
+if memo1.lines.strings[i]=memo1.lines.strings[i-1] then
+memo1.lines.delete(i);
+end;
+end;
+
+end.

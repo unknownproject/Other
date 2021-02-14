@@ -1,0 +1,62 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Generate: TButton;
+    Edit3: TEdit;
+    procedure GenerateClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+function ShiftLeft(Value: LongWord): LongWord; register; overload;
+asm
+  shl eax,5
+end;
+
+procedure TForm1.GenerateClick(Sender: TObject);
+const
+  SpecString='QETYFIWCOPASBNGHJZURKDLXVM1234567890';
+var
+  Crc:integer;
+  i,current:integer;
+  SymPos:integer;
+  FirstPart,Step5,SecondPart,CurrSym:string;
+  Step1,Step2,Step3,Step4:integer;
+begin
+  Edit3.Text:='';
+  SecondPart:='';
+  c:=0;
+  crc:=$001773D9;
+  SymPos:=Random(36); //с помощью функции рэндом мы сгенерируем позицию для символа
+  FirstPart:=Copy(SpecString,SymPos,1)+Copy(SpecString,SymPos,1)+Copy(SpecString,SymPos,1)+Copy(SpecString,SymPos,1);
+  inc(crc,Sympos);
+  for i := 0 to 11 do
+  begin
+    inc(current); //начинаем с первого (точнее пятого) символа
+    Step1:=c+crc; //прибавляем к нему crc от первых 4ех
+    Step2:=ShiftLeft(Step1); //сдвигаем
+    Step3:=Step1+Step2; //суммируем предыдущие результаты
+    Step4:=Step3 mod 36; //делим на кол-во символов в magic и получаем остаток
+    Step5:=Copy(SpecString,Step4,1); //извлекаем нужный символ;
+    SecondPart:=SecondPart+Step5; //собираем вторую часть
+  end;
+  Edit3.Text:=FirstPart+SecondPart; //выводим полный ключ
+end;
+
+end.

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.281,=D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.078,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Main.dfm=D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.703,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.dfm=D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Settings.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.968,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\bot.dproj=D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.265,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.pas=C:\DOCUMENTS AND SETTINGS\UNKNOWNPROJECT\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.703,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.pas=D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Settings.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.265,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.dfm=C:\DOCUMENTS AND SETTINGS\UNKNOWNPROJECT\Мои документы\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.578,=C:\Documents and Settings\unknownproject\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.812,=C:\Documents and Settings\unknownproject\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.031,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Project1.dproj=C:\DOCUMENTS AND SETTINGS\UNKNOWNPROJECT\Мои документы\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.078,D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Main.pas=D:\Programming\Full_Projects\[Delphi]\7Sky_bot\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.593,=C:\Documents and Settings\unknownproject\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.734,=C:\DOCUMENTS AND SETTINGS\UNKNOWNPROJECT\Мои документы\RAD Studio\Projects\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

@@ -1,0 +1,120 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 325
+  ClientWidth = 662
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = [fsBold]
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 333
+    Top = 304
+    Width = 60
+    Height = 13
+    Caption = 'If length >'
+  end
+  object Label2: TLabel
+    Left = 540
+    Top = 304
+    Width = 26
+    Height = 13
+    Caption = 'then'
+  end
+  object Button1: TButton
+    Left = 8
+    Top = 296
+    Width = 25
+    Height = 25
+    ParentCustomHint = False
+    Caption = 'L'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 135
+    Top = 296
+    Width = 66
+    Height = 25
+    Caption = 'Sort'
+    TabOrder = 1
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 39
+    Top = 296
+    Width = 90
+    Height = 25
+    Caption = 'Empty killer'
+    TabOrder = 3
+    OnClick = Button3Click
+  end
+  object Button4: TButton
+    Left = 577
+    Top = 298
+    Width = 75
+    Height = 25
+    Caption = 'DELETE'
+    TabOrder = 4
+    OnClick = Button4Click
+  end
+  object Edit1: TEdit
+    Left = 446
+    Top = 298
+    Width = 83
+    Height = 21
+    Alignment = taCenter
+    TabOrder = 5
+    Text = '6'
+  end
+  object Button5: TButton
+    Left = 302
+    Top = 296
+    Width = 25
+    Height = 25
+    Caption = 'S'
+    TabOrder = 6
+    OnClick = Button5Click
+  end
+  object Memo1: TMemo
+    Left = 8
+    Top = 8
+    Width = 319
+    Height = 282
+    Color = 33023
+    ScrollBars = ssBoth
+    TabOrder = 2
+  end
+  object Memo2: TMemo
+    Left = 333
+    Top = 8
+    Width = 319
+    Height = 284
+    Color = clSilver
+    ScrollBars = ssBoth
+    TabOrder = 7
+  end
+  object Button6: TButton
+    Left = 207
+    Top = 296
+    Width = 89
+    Height = 25
+    Caption = 'Duplicate killer'
+    TabOrder = 8
+    OnClick = Button6Click
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 104
+    Top = 64
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 168
+    Top = 64
+  end
+end

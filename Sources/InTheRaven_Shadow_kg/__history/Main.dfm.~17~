@@ -1,0 +1,45 @@
+object MainForm: TMainForm
+  Left = 0
+  Top = 0
+  ActiveControl = Generate
+  BorderStyle = bsToolWindow
+  Caption = 'In The Raven Shadow Keygen'
+  ClientHeight = 56
+  ClientWidth = 179
+  Color = 13303754
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -9
+  Font.Name = 'Tahoma'
+  Font.Style = [fsBold]
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 11
+  object Generate: TButton
+    Left = 8
+    Top = 28
+    Width = 163
+    Height = 25
+    Caption = 'Generate'
+    TabOrder = 0
+    OnClick = GenerateClick
+  end
+  object Key: TEdit
+    Left = 8
+    Top = 8
+    Width = 163
+    Height = 19
+    Alignment = taCenter
+    Color = 16776690
+    Ctl3D = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGreen
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 1
+  end
+end

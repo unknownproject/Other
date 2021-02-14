@@ -1,0 +1,420 @@
+﻿unit Main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls,winsock, ExtCtrls, Menus,Settings, Sockets, umd5,{ UlkJSON,} TasksEx, AsyncCalls;
+
+type
+  TMainForm = class(TForm)
+    Log: TMemo;
+    LocalTimer: TTimer;
+    GameTimer: TTimer;
+    MainMenu: TMainMenu;
+    N1: TMenuItem;
+    Settings1: TMenuItem;
+    Action1: TMenuItem;
+    Start1: TMenuItem;
+    Stop1: TMenuItem;
+    BoxOne: TGroupBox;
+    Time: TLabel;
+    Exit1: TMenuItem;
+    PlayedLabel: TLabel;
+    Played: TLabel;
+    TcpClient: TTcpClient;
+    Connection1: TMenuItem;
+    Connect1: TMenuItem;
+    Authorize1: TMenuItem;
+    Disconnect1: TMenuItem;
+    Flood1: TMenuItem;
+    Start2: TMenuItem;
+    Stop2: TMenuItem;
+    FloodTimer: TTimer;
+    Other1: TMenuItem;
+    GetBonus1: TMenuItem;
+    Generator1: TMenuItem;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Button1: TButton;
+    Edit4: TEdit;
+    Memo1: TMemo;
+    Debug: TMemo;
+    Button2: TButton;
+    BoxTwo: TGroupBox;
+    ArrowLabel: TLabel;
+    Arrow: TLabel;
+    PickTimer: TTimer;
+    RateTimer: TTimer;
+    procedure CurrentLocalTimeTimer(Sender: TObject);
+    procedure LocalTimerTimer(Sender: TObject);
+    procedure Start1Click(Sender: TObject);
+    procedure Stop1Click(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure Settings1Click(Sender: TObject);
+    procedure ClearLog1Click(Sender: TObject);
+    procedure Connect1Click(Sender: TObject);
+    procedure Authorize1Click(Sender: TObject);
+    procedure Disconnect1Click(Sender: TObject);
+    procedure GetBonus1Click(Sender: TObject);
+    procedure Start2Click(Sender: TObject);
+    procedure Stop2Click(Sender: TObject);
+    procedure FloodTimerTimer(Sender: TObject);
+    procedure Generator1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure TcpClientReceive(Sender: TObject; Buf: PAnsiChar;
+      var DataLen: Integer);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  MainForm: TMainForm;
+  current:_SYSTEMTIME;
+  Resp:string;
+  PackID,Online,Boys,girls:integer;
+implementation
+
+uses Generator;
+
+{$R *.dfm} {$ASSERTIONS ON}
+function HexToStr(hex: string): string;
+var
+  i: Integer;
+begin
+  hex:= StringReplace(hex, ' ', '', [rfReplaceAll]);
+  for i:= 1 to Length(hex) div 2 do
+    Result:= Result + Char(StrToInt('$' + Copy(hex, (i-1) * 2 + 1, 2)));
+end;
+
+function RussianToUnicode(S: String): String;
+var Wrd:Word;
+  pW,pR:PWord;
+  len:Integer;
+begin
+  pW:=@S[1];
+  len:=Length(S);
+  SetLength(Result,len);
+  pR:=@Result[1];
+  while Len<>0 do begin
+    Wrd:=pW^;
+    case Wrd of
+      $C0..$DF,$E0..$FF:pR^:=Wrd+$0350;
+      else pR^:=Wrd;
+    end;
+    inc(pW);
+    inc(pR);
+    dec(Len);
+  end;
+end;
+
+procedure TMainForm.Exit1Click(Sender: TObject);
+begin
+  if TcpClient.Active = True then
+  begin
+    MessageBoxA(0, 'Please stop the bot before exit', 'Warning', Error);
+  end
+  else
+  AbortAllWorkerThreads;
+  Application.Terminate;
+end;
+
+procedure TMainForm.FloodTimerTimer(Sender: TObject);
+var
+  Flood:string;
+begin
+  Flood:=HexToStr('6332382F73656E645F636861745F6D6573736167652F3433E1BC817B'
+                   +'226D657373616765223A2241453541413930362D313435412D313145'
+                   +'362D383346322D30304646463134423136443841453541413930362D'
+                   +'313435412D313145362D383346322D30304646463134423136443841'
+                   +'453541413930362D313435412D313145362D383346322D3030464646'
+                   +'3134423136443841453541413930362D313435412D313145362D3833'
+                   +'46322D30304646463134423136443841453541413930362D31343541'
+                   +'2D313145362D383346322D3030464646313442313644384145354141'
+                   +'3930362D313435412D313145362D383346322D303046464631344231'
+                   +'36443841453541413930362D313435412D313145362D383346322D30'
+                   +'304646463134423136443841453541222C22746F5F706C617965725F6964223A307DE1BC80');
+  FloodTimer.Interval:=StrToInt(Trim(SettingsForm.FlooDInterval.text))*1000;
+try
+  TcpClient.Active:=True;
+  TcpClient.Sendln(Flood,'');
+except
+  TcpClient.Active:=False;
+end;
+end;
+
+procedure TMainForm.Generator1Click(Sender: TObject);
+begin
+  GeneratorForm.Show;
+end;
+
+procedure TMainForm.GetBonus1Click(Sender: TObject);
+var
+  Bonus:string;
+begin
+  Bonus:=HexToStr('2cc/bonus/2'+'E1BC81'+'{}'+'E1BC80');
+try
+  TcpClient.Active:=True;
+  TcpClient.Sendln(Bonus,'');
+  TcpClient.WaitForData(1000); //ожидаем ответ сервера
+  Debug.Lines.Add('---------------------------------------------------------------------------');
+  Debug.Lines.Add(TcpClient.Receiveln('')); //выводим
+  Debug.Lines.Add('---------------------------------------------------------------------------');
+  Debug.Lines.Add('BONUS FOR YOU');
+except
+  Debug.Lines.Add('NO BONUS FOR YOU');
+  TcpClient.Active:=False;
+end;
+end;
+
+procedure TMainForm.LocalTimerTimer(Sender: TObject);
+begin
+  Application.ProcessMessages;
+  GetLocalTime(current); //берем текущее локальное время
+  Time.Caption:=IntToStr(current.wHour)+':'+IntToStr(current.wMinute)+':'+IntToStr(current.wSecond); //отображаем в реальном времени
+end;
+
+procedure TMainForm.Settings1Click(Sender: TObject);
+begin
+  SettingsForm.Show;
+end;
+
+procedure TMainForm.Start1Click(Sender: TObject);
+begin
+  Log.Lines.Clear;
+  Played.Caption:='0';
+  PackID:=1;
+  Start1.Enabled:=False;
+  Stop1.Enabled:=True;
+  Settings1.Enabled:=False;
+  GameTimer.Enabled:=True;
+  SetMaxAsyncCallThreads(1);
+end;
+
+procedure TMainForm.Start2Click(Sender: TObject);
+begin
+  FloodTimer.Enabled:=True;
+  Start2.Enabled:=False;
+  Stop2.Enabled:=True;
+end;
+
+procedure TMainForm.Stop1Click(Sender: TObject);
+var
+  Exit:string;
+begin
+  SetMaxAsyncCallThreads(0);
+  AbortAllWorkerThreads;
+  RateTimer.Enabled:=False;
+  PickTimer.Enabled:=False;
+  GameTimer.Enabled:=False;
+  Start1.Enabled:=True;
+  Settings1.Enabled:=True;
+  Stop1.Enabled:=False;
+  Exit:=HexToStr('3037632F64656C5F67616D655F6A6F696E2F33E1BC817B7DE1BC80');
+try
+  TcpClient.Active:=True;
+  TcpClient.Sendln(Exit,'');
+  TcpClient.WaitForData(1000); //ожидаем ответ сервера
+  Debug.Lines.Add('-------------------------------------------------------------------');
+  Debug.Lines.Add(TcpClient.Receiveln()); //выводим
+  Debug.Lines.Add('-------------------------------------------------------------------');
+  Debug.Lines.Add('GAME WAS EXITED');
+except
+  Debug.Lines.Add('Error');
+  TcpClient.Active:=False;
+end;
+
+end;
+
+procedure TMainForm.Stop2Click(Sender: TObject);
+begin
+  FloodTimer.Enabled:=False;
+  Start2.Enabled:=True;
+  Stop2.Enabled:=False;
+end;
+
+procedure TMainForm.TcpClientReceive(Sender: TObject; Buf: PAnsiChar;
+  var DataLen: Integer);
+begin
+  if Pos('send_online',Resp) <> 0 then
+  begin
+    Boys:=StrToInt(Copy(Resp,Pos('send_online',Resp)+31,3));
+    Girls:=StrToInt(Copy(Resp,Pos('send_online',Resp)+39,3));
+    Online:=Boys+Girls;
+    Arrow.Caption:='Online: '+IntToStr(Online)+'       [ Boys - '+IntToStr(Boys)+' : '+'Girls - '+IntToStr(Girls)+' ]';
+  end;
+end;
+
+procedure TMainForm.Authorize1Click(Sender: TObject);
+var
+  Auth:string;
+begin
+  Authorize1.Enabled:=False;
+  Disconnect1.Enabled:=True;
+  Auth:=HexToStr('6434632F617574682F31E1BC817B2266616B65223A302C22736F6369616C5F6964223A2234333231333830222C22736E223A312C22636F6E6669675F76657273696F6E223A32362C226B6579223A2265'
+  +'38353136663539386362616566306337323836383461363934653639633033222C22736F6369616C5F726566223A2230222C22646576696365223A222B777A746F787179376E726A63323534222C226D6F6465223A317DE1BC80');
+  //Auth:=HexToStr('6135352F617574682F31E1BC817B226D6F6465223A312C22736F6369616C5F6964223A2234333231'
+  //+'333830222C22636F6E6669675F76657273696F6E223A372C22736E223A312C226B6579223A226538'
+  //+'353136663539386362616566306337323836383461363934653639633033222C2264657669636522'
+  //+'3A222F766870382D3671316C2F6F3A5F382F222C22736F6369616C5F726566223A2234333231333830227DE1BC80');
+try
+  //Application.ProcessMessages;
+  TcpClient.Active:=True;
+  TcpClient.Sendln(Auth,'');
+  TcpClient.WaitForData(2000); //ожидаем ответ сервера
+  Debug.Lines.Add('-------------------------------------------------------------------');
+  Debug.Lines.Add(TcpClient.Receiveln()); //выводим
+  Debug.Lines.Add('-------------------------------------------------------------------');
+  Debug.Lines.Add('AUTHORIZED');
+except
+  Debug.Lines.Add('AUTHORIZATION ERROR');
+  TcpClient.Active:=False;
+end;
+end;
+
+procedure TMainForm.Button1Click(Sender: TObject);
+const
+  Magic1='E1BC80';
+  Magic2='E1BC81';
+  Delim='/';
+  //PackName='send_pm_message';
+  PackName='send_chat_message';
+  //PackName='send_regard';
+  //PackName='edit_player_info';
+  //PackName='buy_color';
+  //PackName='transfer';
+  //PackName='get_player_info_page';
+  //PackName='enter_chat';
+  //PackName='send_gift';
+  //PackName='fin_mission';
+  //PackName='get_pgifts';
+  //PackName='clear_count_gifts_new';
+  PackID='2';//3 for edit_info
+  Salt='bkavjV3jjbjavj_dvVHDhz2';
+var
+  Text,Hash,FullPack:string;
+begin
+//    Text:='{"chat_id":100002}';
+  //Text:='{"player_id":"'+Edit2.text+'","invisible":false}';
+ //Text:='{"info":{"about":"","city":"1","sex":"1","audio":-425118009,'
+ //+'"name":"unknownproject","bdate":"1990-10-29","photo":"http://cs623122.vk.me/v623122380/144da/CcXaGsA6Z18.jpg#xp=5;yp=4","photos_ext":"","language":"1","autotext":""}}';
+  //Text:='{"count":1,"player_id":"'+Edit2.Text+'","comment":"","gift_id":112}';
+  //Text:='{"tasks":{"11":1,"15":300,"24":1,"29":1,"32":1,"34":1,"38":1}';
+  Text:='{"message":"'+Edit3.text+'","to_player_id":0,"clear":0}';
+  //Text:='{"to_player_id":2402280,"message":"Test"}';
+  Hash:=LowerCase(Copy(md5(PackName+Salt+Text),4,3));
+  Edit4.Text:=Hash;
+  FullPack:=Hash+Delim+PackName+Delim+PackID+HexToStr(Magic2)+Text+HexToStr(Magic1);
+try
+  Application.ProcessMessages;
+  TcpClient.Active:=True;
+  TcpClient.WaitForData(1000);
+  TcpClient.Sendln(FullPack,'');
+  Debug.Lines.Add(TcpClient.Receiveln());
+except
+  Log.Lines.Add('хуй');
+end;
+end;
+
+procedure TMainForm.ClearLog1Click(Sender: TObject);
+begin
+  Log.Lines.Clear;
+end;
+
+procedure TMainForm.Connect1Click(Sender: TObject);
+begin
+  Connect1.Enabled:=False;
+  Authorize1.Enabled:=True;
+try
+  TcpClient.RemoteHost:='178.159.255.207';
+  TcpClient.RemotePort:='7009';
+  TcpClient.Active:=True; //открываем соединение, устанавливая компонент в активный режим.
+  Debug.Lines.Add('CONNECTED');
+except
+  Debug.Lines.Add('CONNECTION ERROR');
+  TcpClient.Active:=False;
+end;
+end;
+
+procedure TMainForm.CurrentLocalTimeTimer(Sender: TObject); //здесь у нас будет основной код, который будет выполняться по таймеру с заданной задержкой
+const
+  Magic1='E1BC80';
+  Magic2='E1BC81';
+  Delim='/';
+var
+  Game:string;
+  //Rate,RateResp,RateText,RateHash,RawIDCopy:string;
+begin
+  Inc(PackID);
+  GameTimer.Interval:=StrToInt(Trim(SettingsForm.IntervalEdit.text))*1000;
+  Game:='fd8/add_game_join/'+IntToStr(PackID)+HexToStr('E1BC81')+'{"type":"pick"}'+HexToStr('E1BC80');
+  Resp:='';
+EnterWorkerThread; //выполняем код цикла в доп.потоке
+try
+  TcpClient.Active:=True; //открываем сокет
+  TcpClient.Sendln(Game,'');  //отправляем пакет
+  Log.Lines.Add('['+''+IntToStr(current.wHour)+':'
+  +IntToStr(current.wMinute)+':'
+  +IntToStr(current.wSecond)+'] -'+' Waiting for the game');
+  While Pos('send_game_ready',Resp) = 0 do
+  begin
+    TcpClient.WaitForData(0); //ожидаем ответ сервера
+    Resp:=TcpClient.Receiveln(); //выводим
+  end;
+   //At this point game was started
+  if Pos('send_game_ready',Resp) <> 0 then
+  begin
+    Debug.Lines.Add('------------------------    ['+''+IntToStr(current.wHour)+':'+IntToStr(current.wMinute)+':'+IntToStr(current.wSecond)+']    ------------------------');
+    Debug.Lines.Add(Resp); //выводим
+    Debug.Lines.Add('-------------------------------------------------------------------');
+    Log.Lines.Add('['+''+IntToStr(current.wHour)+':'
+    +IntToStr(current.wMinute)+':'
+    +IntToStr(current.wSecond)+'] -'+' Game was started');
+  end;
+  //////////////////////////////////////////////////////////////////
+///  Выводим текущее кол-во игр
+  While Pos('"infos":{"1895899":{"count_games"',Resp) = 0 do
+  //While Pos('"infos":{"2402280":{"count_games"',Resp) = 0 do
+  begin
+    TcpClient.WaitForData(30000); //ожидаем ответ сервера
+    Resp:=TcpClient.Receiveln(); //выводим
+  end;
+  if Pos('{"infos":{"1895899":{"count_games"',Resp) <> 0 then
+  //if Pos('{"infos":{"2402280":{"count_games"',Resp) <> 0 then
+  begin
+    //Assert(Pos('{"infos":{"1895899":{"count_games"',Resp) <> 0);
+    Resp:=Copy(Resp,Pos('{"infos":{"1895899":{"count_games"',Resp),43);
+    //Resp:=Copy(Resp,Pos('{"infos":{"2402280":{"count_games"',Resp),43);
+    Debug.Lines.Add('------------------------    ['+''+IntToStr(current.wHour)+':'+IntToStr(current.wMinute)+':'+IntToStr(current.wSecond)+']    ------------------------');
+    Debug.Lines.Add(Resp); //выводим
+    Debug.Lines.Add('-------------------------------------------------------------------');
+    Log.Lines.Add('['+''+IntToStr(current.wHour)+':'
+    +IntToStr(current.wMinute)+':'
+    +IntToStr(current.wSecond)+'] -'+' Game was finished');
+    Played.Caption:=IntToStr(StrToInt(Played.Caption)+1); //обновляем кол-во игр
+  end;
+finally
+  //Log.Lines.Add('Something wrong...');
+  //TcpClient.Active:=False;
+  LeaveWorkerThread; //выходим из доп.потом по завершению цикла
+end;
+end;
+
+
+procedure TMainForm.Disconnect1Click(Sender: TObject);
+begin
+  Disconnect1.Enabled:=False;
+  Connect1.Enabled:=True;
+try
+  TcpClient.Active:=False;
+  Debug.Lines.Add('CONNECTION WAS CLOSED');
+except
+  Debug.Lines.Add('WTF!!!!');
+  TcpClient.Active:=False;
+end;
+end;
+
+end.

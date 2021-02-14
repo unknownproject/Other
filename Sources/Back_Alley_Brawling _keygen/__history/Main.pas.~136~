@@ -1,0 +1,94 @@
+unit Main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, umd5, Scrlcapt, ExtCtrls, jpeg, Buttons, mmsystem,
+  RbDrawCore, RbButton;
+
+type
+  TKgnForm = class(TForm)
+    RegNumberEdit: TEdit;
+    NameEdit: TEdit;
+    TrialCodeEdit: TEdit;
+    UnlockCodeEdit: TEdit;
+    TrialReset: TLabel;
+    UnlockCode: TLabel;
+    RegNumber: TLabel;
+    Name: TLabel;
+    CaptionChngr: TTimer;
+    BackGrnd: TImage;
+    GnrtBtn: TRbButton;
+    procedure CaptionChngrTimer(Sender: TObject);
+    procedure GnrtBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  KgnForm: TKgnForm;
+  i: integer = 1;
+const
+value = '25745-byjimminy-582552';
+value2 = '5821354-cadizzaboom-48548';
+implementation
+
+{$R *.dfm}
+
+
+
+
+procedure TKgnForm.CaptionChngrTimer(Sender: TObject);
+const
+GoString=' Unknown project proudly presents BackAlleyBrawl v1.0 keygen';
+var
+s: string;
+begin
+s := KgnForm.Caption;
+Delete(s,1,1);
+s := s + GoString[i];
+KgnForm.Caption := s;
+inc(i);
+if i>length(GoString) then i := 1;
+end;
+
+procedure TKgnForm.GnrtBtnClick(Sender: TObject);
+var
+Concat,Md5hash,trim,split,Concat2,Md5hash2,trim2,split2:string;
+begin
+RegNumberEdit.MaxLength := 12;
+if length(RegNumberEdit.text) < RegNumberEdit.MaxLength
+then
+begin
+RegNumberEdit.text:='Invalid reg. number';
+exit;
+end
+else
+if length(NameEdit.text) < 3
+then
+begin
+NameEdit.text:='Invalid name';
+exit;
+end;
+
+///////Trial reset generator//////////
+Concat:=RegNumberEdit.Text+NameEdit.Text+value; //сформировали единую строку из серийного номера, имени и константы
+Md5hash:=md5(Concat); //получили от нее md5 хэш
+Trim:=AnsiUpperCase(Copy(Md5hash, 1,19)+(Copy(Md5hash, 32,1))); //вычленили их хэша строку длиной 20 символов = 19 с начала + 1 с конца и перевели в верхний регистр
+Split:=Copy(Trim,1,4)+'-'+Copy(Trim,5,4)+'-'+Copy(Trim,9,4)+'-'+Copy(Trim,13,4)+'-'+Copy(Trim,17,4); //разделили строку на блоки с дефисами через каждые 4 символа
+TrialCodeEdit.Text:=split; //TrialCodeEdit содержит конечный ключ для сброса триала
+///////Trial reset generator//////////
+
+///////Unlock code generator//////////
+Concat2:=RegNumberEdit.Text+NameEdit.Text+value2;
+Md5hash2:=md5(Concat2);
+Trim2:=AnsiUpperCase(Copy(Md5hash2, 1,19)+(Copy(Md5hash2, 32,1)));
+Split2:=Copy(Trim2,1,4)+'-'+Copy(Trim2,5,4)+'-'+Copy(Trim2,9,4)+'-'+Copy(Trim2,13,4)+'-'+Copy(Trim2,17,4);
+UnlockCodeEdit.Text:=split2;
+///////Unlock code generator//////////
+end;
+
+end.

@@ -1,0 +1,50 @@
+unit Logs;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, RbDrawCore, RbButton, ComCtrls;
+
+type
+  TForm3 = class(TForm)
+    Memo1: TMemo;
+    RbButton1: TRbButton;
+    RbButton2: TRbButton;
+    SaveDialog1: TSaveDialog;
+    procedure RbButton1Click(Sender: TObject);
+    procedure RbButton2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm3.RbButton1Click(Sender: TObject);
+begin
+  Memo1.Lines.Clear;
+end;
+
+procedure TForm3.RbButton2Click(Sender: TObject);
+var
+  Sorted: TStringList;
+begin
+  // создаем
+  Sorted := TStringList.Create;
+  // присваиваем переменной t строки из Memo
+  Sorted.AddStrings(Memo1.Lines);
+  // сортируем
+  Sorted.Sort;
+  Memo1.Clear;
+  // присваиваем memo уже отсортированные строки
+  Memo1.Lines.AddStrings(Sorted);
+end;
+
+end.

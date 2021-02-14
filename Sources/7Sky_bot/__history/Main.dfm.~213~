@@ -1,0 +1,281 @@
+object MainForm: TMainForm
+  Left = 150
+  Top = 0
+  ActiveControl = BoxOne
+  BorderIcons = [biMinimize]
+  BorderStyle = bsToolWindow
+  Caption = ' --- 7sky [Exosphere] Tools v1.03 --- '
+  ClientHeight = 170
+  ClientWidth = 504
+  Color = 33023
+  Ctl3D = False
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -9
+  Font.Name = 'Tahoma'
+  Font.Style = [fsBold]
+  Menu = MainMenu
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  Visible = True
+  PixelsPerInch = 96
+  TextHeight = 11
+  object Log: TMemo
+    Left = 8
+    Top = 5
+    Width = 202
+    Height = 139
+    Color = 13565951
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 27136
+    Font.Height = -9
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    WantReturns = False
+  end
+  object BoxOne: TGroupBox
+    Left = 8
+    Top = 144
+    Width = 202
+    Height = 20
+    TabOrder = 1
+    object Time: TLabel
+      Left = 148
+      Top = 6
+      Width = 45
+      Height = 11
+      Alignment = taCenter
+      Caption = 'Getting...'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 16514043
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Transparent = True
+    end
+    object PlayedLabel: TLabel
+      Left = 3
+      Top = 6
+      Width = 37
+      Height = 11
+      Caption = 'Played:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clYellow
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Played: TLabel
+      Left = 45
+      Top = 6
+      Width = 7
+      Height = 11
+      Caption = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clYellow
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object Edit1: TEdit
+    Left = 39
+    Top = 184
+    Width = 417
+    Height = 17
+    Enabled = False
+    TabOrder = 2
+    Text = 'Test'
+  end
+  object Edit2: TEdit
+    Left = 39
+    Top = 207
+    Width = 417
+    Height = 17
+    TabOrder = 3
+    Text = '1895899'
+  end
+  object Edit3: TEdit
+    Left = 39
+    Top = 230
+    Width = 417
+    Height = 17
+    TabOrder = 4
+    Text = 'http://pp.vk.me/c625328/v625328867/2c9e0/RQYOM4OQbc8.jpg'
+  end
+  object Button1: TButton
+    Left = 39
+    Top = 311
+    Width = 417
+    Height = 25
+    Caption = 'Send message'
+    TabOrder = 5
+    OnClick = Button1Click
+  end
+  object Edit4: TEdit
+    Left = 39
+    Top = 253
+    Width = 417
+    Height = 17
+    Enabled = False
+    TabOrder = 6
+  end
+  object Memo1: TMemo
+    Left = 39
+    Top = 276
+    Width = 417
+    Height = 29
+    Enabled = False
+    Lines.Strings = (
+      'Fuck me up')
+    TabOrder = 7
+  end
+  object Debug: TMemo
+    Left = 216
+    Top = 5
+    Width = 281
+    Height = 139
+    Alignment = taCenter
+    Color = 10412768
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -9
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 8
+  end
+  object Button2: TButton
+    Left = 216
+    Top = 342
+    Width = 75
+    Height = 25
+    Caption = 'Button2'
+    TabOrder = 9
+  end
+  object BoxTwo: TGroupBox
+    Left = 216
+    Top = 144
+    Width = 281
+    Height = 20
+    TabOrder = 10
+    object ArrowLabel: TLabel
+      Left = 8
+      Top = 6
+      Width = 3
+      Height = 11
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 9764864
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Arrow: TLabel
+      Left = 8
+      Top = 6
+      Width = 38
+      Height = 11
+      Caption = 'Nothing'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 9764864
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object GameTimer: TTimer
+    Enabled = False
+    OnTimer = CurrentLocalTimeTimer
+    Left = 29
+    Top = 16
+  end
+  object LocalTimer: TTimer
+    OnTimer = LocalTimerTimer
+    Left = 149
+    Top = 16
+  end
+  object MainMenu: TMainMenu
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
+    Left = 149
+    Top = 72
+    object N1: TMenuItem
+      Caption = 'File'
+      object Settings1: TMenuItem
+        Caption = 'Settings'
+        OnClick = Settings1Click
+      end
+      object Exit1: TMenuItem
+        Caption = 'Exit'
+        OnClick = Exit1Click
+      end
+    end
+    object Action1: TMenuItem
+      Caption = 'Game'
+      object Start1: TMenuItem
+        Caption = 'Start'
+        OnClick = Start1Click
+      end
+      object Stop1: TMenuItem
+        Caption = 'Stop'
+        Enabled = False
+        OnClick = Stop1Click
+      end
+    end
+    object Connection1: TMenuItem
+      Caption = 'Connection'
+      object Connect1: TMenuItem
+        Caption = 'Connect'
+        OnClick = Connect1Click
+      end
+      object Authorize1: TMenuItem
+        Caption = 'Authorize'
+        Enabled = False
+        OnClick = Authorize1Click
+      end
+      object Disconnect1: TMenuItem
+        Caption = 'Disconnect'
+        Enabled = False
+        OnClick = Disconnect1Click
+      end
+    end
+    object Flood1: TMenuItem
+      Caption = 'Flood'
+      object Start2: TMenuItem
+        Caption = 'Start'
+        OnClick = Start2Click
+      end
+      object Stop2: TMenuItem
+        Caption = 'Stop'
+        Enabled = False
+        OnClick = Stop2Click
+      end
+    end
+  end
+  object TcpClient: TTcpClient
+    BlockMode = bmNonBlocking
+    OnReceive = TcpClientReceive
+    Left = 24
+    Top = 72
+  end
+  object FloodTimer: TTimer
+    Enabled = False
+    OnTimer = FloodTimerTimer
+    Left = 88
+    Top = 16
+  end
+  object BonusTimer: TTimer
+    Enabled = False
+    Interval = 86400000
+    OnTimer = BonusTimerTimer
+    Left = 88
+    Top = 72
+  end
+end

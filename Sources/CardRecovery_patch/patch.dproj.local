@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2011.04.11 22:39:14.322.pas,C:\Users\unknown project\Documents\RAD Studio\Projects\Unit1.pas=F:\Саша\УПЧК\Программинг\Созданное\CardRecovery patch\Unit1.pas</Transaction>
+    <Transaction>2011.04.11 22:39:14.340.dfm,C:\Users\unknown project\Documents\RAD Studio\Projects\Unit1.dfm=F:\Саша\УПЧК\Программинг\Созданное\CardRecovery patch\Unit1.dfm</Transaction>
+    <Transaction>2011.04.11 22:39:15.741.dproj,C:\Users\unknown project\Documents\RAD Studio\Projects\Project1.dproj=F:\Саша\УПЧК\Программинг\Созданное\CardRecovery patch\Project1.dproj</Transaction>
+    <Transaction>2011.04.11 23:59:26.694.dproj,F:\Саша\УПЧК\Программинг\Созданное\CardRecovery patch\Project1.dproj=F:\Саша\УПЧК\Программинг\Созданное\CardRecovery patch\patch.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

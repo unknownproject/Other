@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.276,=C:\Users\unknownproject\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.801,=D:\Programming\Full_Projects\[Delphi]\Ocr_test\AspriseOcr.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.558,D:\Programming\Full_Projects\[Delphi]\Ocr_test\Unit1.dfm=D:\Programming\Full_Projects\[Delphi]\FStrana_ocr\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.218,C:\Users\unknownproject\Documents\RAD Studio\Projects\Unit1.pas=D:\Programming\Full_Projects\[Delphi]\Ocr_test\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.618,D:\Programming\Full_Projects\[Delphi]\Ocr_test\AspriseOcr.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.400,C:\Users\unknownproject\Documents\RAD Studio\Projects\Project1.dproj=D:\Programming\Full_Projects\[Delphi]\Ocr_test\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.218,C:\Users\unknownproject\Documents\RAD Studio\Projects\Unit1.dfm=D:\Programming\Full_Projects\[Delphi]\Ocr_test\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.457,=D:\Programming\Full_Projects\[Delphi]\Ocr_test\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.558,D:\Programming\Full_Projects\[Delphi]\Ocr_test\Unit1.pas=D:\Programming\Full_Projects\[Delphi]\FStrana_ocr\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

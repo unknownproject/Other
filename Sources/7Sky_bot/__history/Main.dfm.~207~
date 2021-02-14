@@ -1,0 +1,148 @@
+object MainForm: TMainForm
+  Left = 150
+  Top = 0
+  ActiveControl = BoxOne
+  BorderIcons = [biMinimize, biMaximize]
+  BorderStyle = bsToolWindow
+  Caption = '7sky [Exosphere] GameBot'
+  ClientHeight = 167
+  ClientWidth = 200
+  Color = 33023
+  Ctl3D = False
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -9
+  Font.Name = 'Tahoma'
+  Font.Style = [fsBold]
+  Menu = MainMenu
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  Visible = True
+  PixelsPerInch = 96
+  TextHeight = 11
+  object Log: TMemo
+    Left = 8
+    Top = 5
+    Width = 185
+    Height = 139
+    Alignment = taCenter
+    Color = 13565951
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 27136
+    Font.Height = -9
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    WantReturns = False
+  end
+  object BoxOne: TGroupBox
+    Left = 8
+    Top = 144
+    Width = 185
+    Height = 20
+    TabOrder = 1
+    object Time: TLabel
+      Left = 132
+      Top = 6
+      Width = 45
+      Height = 11
+      Alignment = taCenter
+      Caption = 'Getting...'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 16514043
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Transparent = True
+    end
+    object PlayedLabel: TLabel
+      Left = 3
+      Top = 6
+      Width = 37
+      Height = 11
+      Caption = 'Played:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clYellow
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Played: TLabel
+      Left = 45
+      Top = 6
+      Width = 7
+      Height = 11
+      Caption = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clYellow
+      Font.Height = -9
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object GameTimer: TTimer
+    Enabled = False
+    OnTimer = CurrentLocalTimeTimer
+    Left = 29
+    Top = 16
+  end
+  object LocalTimer: TTimer
+    OnTimer = LocalTimerTimer
+    Left = 149
+    Top = 16
+  end
+  object MainMenu: TMainMenu
+    BiDiMode = bdLeftToRight
+    ParentBiDiMode = False
+    Left = 149
+    Top = 72
+    object N1: TMenuItem
+      Caption = 'File'
+      object Settings1: TMenuItem
+        Caption = 'Settings'
+        OnClick = Settings1Click
+      end
+      object Exit1: TMenuItem
+        Caption = 'Exit'
+        OnClick = Exit1Click
+      end
+    end
+    object Action1: TMenuItem
+      Caption = 'Action'
+      object Start1: TMenuItem
+        Caption = 'Start'
+        OnClick = Start1Click
+      end
+      object Stop1: TMenuItem
+        Caption = 'Stop'
+        Enabled = False
+        OnClick = Stop1Click
+      end
+      object ClearLog1: TMenuItem
+        Caption = 'Clear Log'
+        OnClick = ClearLog1Click
+      end
+    end
+    object Connection1: TMenuItem
+      Caption = 'Connection'
+      object Connect1: TMenuItem
+        Caption = 'Connect'
+        OnClick = Connect1Click
+      end
+      object Authorize1: TMenuItem
+        Caption = 'Authorize'
+      end
+      object Disconnect1: TMenuItem
+        Caption = 'Disconnect'
+      end
+    end
+  end
+  object TcpClient: TTcpClient
+    Left = 24
+    Top = 72
+  end
+end

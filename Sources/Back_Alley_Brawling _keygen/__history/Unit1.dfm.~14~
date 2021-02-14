@@ -1,0 +1,136 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  BorderStyle = bsSizeToolWin
+  Caption = 'BackAlleyBrawl keygen by unknown project'
+  ClientHeight = 220
+  ClientWidth = 326
+  Color = clSilver
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clGreen
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = [fsBold]
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 119
+    Top = 94
+    Width = 88
+    Height = 13
+    Alignment = taCenter
+    Caption = 'Trial reset code'
+  end
+  object Label2: TLabel
+    Left = 126
+    Top = 140
+    Width = 68
+    Height = 13
+    Alignment = taCenter
+    Caption = 'Unlock code'
+  end
+  object Label3: TLabel
+    Left = 126
+    Top = 5
+    Width = 69
+    Height = 13
+    Alignment = taCenter
+    Caption = 'Reg number'
+  end
+  object Label4: TLabel
+    Left = 144
+    Top = 49
+    Width = 32
+    Height = 13
+    Alignment = taCenter
+    Caption = 'Name'
+  end
+  object Edit1: TEdit
+    AlignWithMargins = True
+    Left = 8
+    Top = 24
+    Width = 310
+    Height = 19
+    Alignment = taCenter
+    Color = 8421631
+    Ctl3D = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 0
+    Text = '6D5F-EEFD-AA'
+  end
+  object Edit2: TEdit
+    Left = 8
+    Top = 67
+    Width = 310
+    Height = 19
+    Alignment = taCenter
+    Color = 8421631
+    Ctl3D = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentCtl3D = False
+    ParentFont = False
+    TabOrder = 1
+    Text = 'unknown project'
+  end
+  object Edit3: TEdit
+    Left = 8
+    Top = 113
+    Width = 310
+    Height = 19
+    Alignment = taCenter
+    Color = 8421631
+    Ctl3D = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentCtl3D = False
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 2
+  end
+  object Button1: TButton
+    Left = 8
+    Top = 186
+    Width = 310
+    Height = 25
+    Caption = 'Generate'
+    DragCursor = crDefault
+    ParentShowHint = False
+    ShowHint = False
+    TabOrder = 3
+    TabStop = False
+    OnClick = Button1Click
+  end
+  object Edit4: TEdit
+    Left = 8
+    Top = 159
+    Width = 310
+    Height = 19
+    Alignment = taCenter
+    Color = 8421631
+    Ctl3D = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentCtl3D = False
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 4
+  end
+end

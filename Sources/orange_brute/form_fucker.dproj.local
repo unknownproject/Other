@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.941,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Unit1.pas=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Main.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.028,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Unit2.dfm=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Config.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.917,E:\Programming\Созданное\[Delphi]\orange_brute\Network.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.191,E:\Programming\Созданное\[Delphi]\orange_brute\Unit5.dfm=E:\Programming\Созданное\[Delphi]\orange_brute\Network.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.028,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Unit2.pas=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Config.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.506,D:\Programming\Full_Projects\[Delphi]\CandyFucker\Main.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.919,E:\Programming\Созданное\[Delphi]\orange_brute\Network.pas=E:\Programming\Созданное\[Delphi]\orange_brute\Unit4.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.817,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Logs.dfm=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Log.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.996,E:\Programming\Созданное\[Delphi]\orange_brute\Account.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.333,D:\Programming\Созданное\[Delphi]\orange_brute\form_fucker.dproj=D:\Programming\Созданное\[Delphi]\orange_brute\orange_brute.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.051,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Log.pas=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.588,F:\Саша\УПЧК\Программинг\Созданное\[Delphi]\Bruttah_with threads\orange_brute.dproj=F:\Саша\УПЧК\Программинг\Созданное\[Delphi]\Bruttah_with threads\bruttah.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.058,D:\Programming\Full_Projects\[Delphi]\orange_brute\Main.dfm=D:\Programming\Full_Projects\[Delphi]\CandyFucker\Main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.253,F:\Саша\УПЧК\Программинг\Созданное\[Delphi]\Bruttah_with threads\Project1.dproj=F:\Саша\УПЧК\Программинг\Созданное\[Delphi]\Bruttah_with threads\bruttah.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.613,E:\Programming\Созданное\[Delphi]\orange_brute\Unit4.dfm=E:\Programming\Созданное\[Delphi]\orange_brute\Account.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.051,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Log.dfm=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Unit3.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.919,E:\Programming\Созданное\[Delphi]\orange_brute\Network.dfm=E:\Programming\Созданное\[Delphi]\orange_brute\Unit4.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.941,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Unit1.dfm=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.817,E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Logs.pas=E:\Programming\Созданное\[Delphi]\Bruttah_with threads\Log.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.613,E:\Programming\Созданное\[Delphi]\orange_brute\Unit4.pas=E:\Programming\Созданное\[Delphi]\orange_brute\Account.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.979,=E:\Programming\Созданное\[Delphi]\orange_brute\Unit5.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.944,=D:\Programming\Full_Projects\[Delphi]\orange_brute\Main.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.058,D:\Programming\Full_Projects\[Delphi]\orange_brute\Main.pas=D:\Programming\Full_Projects\[Delphi]\CandyFucker\Main.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.018,=E:\Programming\Созданное\[Delphi]\orange_brute\Unit4.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.521,=E:\Programming\Созданное\[Delphi]\orange_brute\Unit4.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.191,E:\Programming\Созданное\[Delphi]\orange_brute\Unit5.pas=E:\Programming\Созданное\[Delphi]\orange_brute\Network.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Main.pas"/>
+    <File Path="Main.dfm"/>
+    <File Path="Config.pas"/>
+    <File Path="Config.dfm"/>
+    <File Path="Logs.pas"/>
+    <File Path="Logs.dfm"/>
+    <File Path="ABOUT.pas"/>
+    <File Path="ABOUT.dfm"/>
+    <File Path="Network.pas"/>
+    <File Path="Network.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>

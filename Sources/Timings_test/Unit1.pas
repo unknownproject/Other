@@ -1,0 +1,94 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Memo1: TMemo;
+    Button1: TButton;
+    Label1: TLabel;
+    Button2: TButton;
+    Timer1: TTimer;
+    Label2: TLabel;
+    Edit1: TEdit;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  flg:dword;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  Before, After, Total, Total2, Cnt, Skp :Dword;
+begin
+  Before:=0;
+  After:=0;
+  Total:=0;
+  Total2:=0;
+  Cnt:=0;
+  Skp:=0;
+  while Total2 <= 1000 do
+    begin
+      Application.ProcessMessages;
+      Before:=GetTickCount;
+//      timeBeginPeriod(1);
+      Sleep(StrToInt(Edit1.Text));
+//      Memo1.Lines.Add('Say Hello to my Little Friend');
+//      timeEndPeriod(1);
+      After:=GetTickCount;
+      Total:=After-Before;
+      Total2:=Total2+Total;
+      if Total > 16 then
+      begin
+//        Memo1.Lines.Add('Slow Frame '+IntToStr(Cnt)+' -- '+'Takes: '+IntToStr(Total)+ ' MS');
+      end;
+      //Vsync simulation
+      if cnt <> 60 then
+      begin
+        Cnt:=Cnt+1;
+      end
+      else
+      begin
+//        Memo1.Lines.Add('Skipped Frame '+IntToStr(Cnt)+' -- '+'Takes: '+IntToStr(Total)+ ' MS');
+        Skp:=Skp+1;
+      end;
+      end;
+        Label1.Caption:='FPS: '+IntToStr(Cnt)+' -- '+'Latest Frame Takes: '+IntToStr(Total)+ ' MS';
+        Label2.Caption:='Skipped Frames : '+IntToStr(Skp);
+    end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  flg:=0;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  flg:=1;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  if flg=1 then
+  begin
+    Button1.Click;
+  end;
+end;
+
+end.

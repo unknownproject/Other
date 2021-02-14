@@ -1,0 +1,211 @@
+//
+// Asprise OCR API for Delphi: ALL RIGHTS RESERVED (c) Asprise.com
+//
+// Read <a href = "http://asprise.com/ocr/docs/html/?src=delphi">developer's guide to Delphi OCR SDK API</a>.
+//
+// For evaluation only:
+// 1) Using this file with or without modification in any application is strictly prohibited unless you
+//    have obtained a license from Asprise.
+//
+// 2) Distributing this file in any way is prohibited.
+//
+// Visit <a href="http://asprise.com/royalty-free-library/delphi-ocr-sdk-api-overview.html">Asprise OCR SDK Delphi API</a>
+//
+
+unit AspriseOcr;
+
+interface
+uses Windows, SysUtils;
+
+
+Const
+OCR_SPEED_FASTEST = 'fastest';
+OCR_SPEED_FAST = 'fast';
+OCR_SPEED_SLOW = 'slow';
+
+OCR_RECOGNIZE_TYPE_TEXT = 'text';
+OCR_RECOGNIZE_TYPE_BARCODE = 'barcode';
+OCR_RECOGNIZE_TYPE_ALL = 'all';
+
+OCR_OUTPUT_FORMAT_PLAINTEXT = 'text';
+OCR_OUTPUT_FORMAT_XML = 'xml';
+OCR_OUTPUT_FORMAT_PDF = 'pdf';
+OCR_OUTPUT_FORMAT_RTF = 'rtf';
+
+
+OCR_PROP_LIMIT_TO_CHARSET = 'PROP_LIMIT_TO_CHARSET';
+
+OCR_PROP_PAGE_TYPE = 'PROP_PAGE_TYPE';
+OCR_PROP_PAGE_TYPE_AUTO_DETECT = 'auto';
+OCR_PROP_PAGE_TYPE_SINGLE_BLOCK = 'single_block';
+OCR_PROP_PAGE_TYPE_SINGLE_COLUMN = 'single_column';
+OCR_PROP_PAGE_TYPE_SINGLE_LINE = 'single_line';
+OCR_PROP_PAGE_TYPE_SINGLE_WORD = 'single_word';
+OCR_PROP_PAGE_TYPE_SINGLE_CHARACTOR = 'single_char';
+OCR_PROP_PAGE_TYPE_SCATTERED = 'scattered';
+
+OCR_PROP_OUTPUT_SEPARATE_WORDS = 'PROP_OUTPUT_SEPARATE_WORDS';
+
+// The DPI to be used to render the PDF file; default is 300 if not specified
+OCR_PROP_INPUT_PDF_DPI = 'PROP_INPUT_PDF_DPI';
+
+// -------- Dictionary related ---------
+// set to 'true' to skip using the default built in dict. Default value: 'false'
+OCR_START_PROP_DICT_SKIP_BUILT_IN_DEFAULT = 'START_PROP_DICT_SKIP_BUILT_IN_DEFAULT';
+// set to 'true' to skip using all built-in dicts. Default value: 'false'
+OCR_START_PROP_DICT_SKIP_BUILT_IN_ALL = 'START_PROP_DICT_SKIP_BUILT_IN_ALL';
+// Path to your custom dictionary (words are separated using line breaks). Default value: null
+OCR_START_PROP_DICT_CUSTOM_DICT_FILE = 'START_PROP_DICT_CUSTOM_DICT_FILE';
+// Path to your custom templates (templates are separated using line breaks). Default value: null
+OCR_START_PROP_DICT_CUSTOM_TEMPLATES_FILE = 'START_PROP_DICT_CUSTOM_TEMPLATES_FILE';
+
+// Percentage measuring the importance of the dictionary (0: not at all; 100: extremely important; default: 10)
+OCR_PROP_DICT_DICT_IMPORTANCE = 'PROP_DICT_DICT_IMPORTANCE';
+
+// -------- PDF output related ---------
+
+OCR_PROP_PDF_OUTPUT_FILE = 'PROP_PDF_OUTPUT_FILE';
+OCR_PROP_PDF_OUTPUT_IMAGE_DPI = 'PROP_PDF_OUTPUT_IMAGE_DPI';
+OCR_PROP_PDF_OUTPUT_FONT = 'PROP_PDF_OUTPUT_FONT';
+OCR_PROP_PDF_OUTPUT_TEXT_VISIBLE = 'PROP_PDF_OUTPUT_TEXT_VISIBLE';
+OCR_PROP_PDF_OUTPUT_IMAGE_FORCE_BW = 'PROP_PDF_OUTPUT_IMAGE_FORCE_BW';
+
+OCR_PROP_PDF_OUTPUT_PDFA = 'PROP_PDF_OUTPUT_PDFA';
+OCR_PROP_PDF_OUTPUT_PDFA_FONT_FILE = 'PROP_PDF_OUTPUT_PDFA_FONT_FILE';
+
+// Text recognized below or above confidence will be highlighted in different colors.
+OCR_PROP_PDF_OUTPUT_CONF_THRESHOLD = 'PROP_PDF_OUTPUT_CONF_THRESHOLD';
+
+// Return text in 'text' or 'xml' format
+OCR_PROP_PDF_OUTPUT_RETURN_TEXT = 'PROP_PDF_OUTPUT_RETURN_TEXT';
+
+// -------- RTF output related ---------
+
+OCR_PROP_RTF_OUTPUT_FILE = 'PROP_RTF_OUTPUT_FILE';
+
+// Return text in 'text' or 'xml' format
+OCR_PROP_RTF_OUTPUT_RETURN_TEXT = 'PROP_RTF_OUTPUT_RETURN_TEXT';
+
+// default is LETTER, may set to A4.
+OCR_PROP_RTF_PAPER_SIZE = 'PROP_RTF_PAPER_SIZE';
+
+// set to false to disable rendering table cells borders into black. Default is true.
+OCR_PROP_RTF_SHOW_TABLE_CELL_BORDER = 'PROP_RTF_SHOW_TABLE_CELL_BORDER';
+
+// -------- image processing related ---------
+
+// Image pre-processing type
+OCR_PROP_IMG_PREPROCESS_TYPE = 'PROP_IMG_PREPROCESS_TYPE';
+OCR_PROP_IMG_PREPROCESS_TYPE_DEFAULT = 'default';
+OCR_PROP_IMG_PREPROCESS_TYPE_DEFAULT_WITH_ORIENTATION_DETECTION = 'default_with_orientation_detection';
+OCR_PROP_IMG_PREPROCESS_TYPE_CUSTOM = 'custom';
+
+// Image pre-processing command
+OCR_PROP_IMG_PREPROCESS_CUSTOM_CMDS = 'PROP_IMG_PREPROCESS_CUSTOM_CMDS';
+
+// -------- table related ---------
+// table will be detected by default; set this property to true to skip detection.
+OCR_PROP_TABLE_SKIP_DETECTION = 'PROP_TABLE_SKIP_DETECTION';
+
+// default is 32 if not specified
+OCR_PROP_TABLE_MIN_SIDE_LENGTH = 'PROP_TABLE_MIN_SIDE_LENGTH';
+
+// Save intermediate images generated for debug purpose - don't specify or empty string to skip saving
+OCR_PROP_SAVE_INTERMEDIATE_IMAGES_TO_DIR = 'PROP_SAVE_INTERMEDIATE_IMAGES_TO_DIR';
+
+// Set to true if there is only one image per page on the input PDF file; potentially speed up of the process
+OCR_PROP_INPUT_PDF_SINGLE_IMG_PER_PAGE = 'PROP_INPUT_PDF_SINGLE_IMG_PER_PAGE';
+
+// Load aocr library
+function DynamicLoadAocrLibrary(const pathToAocrLibraryFile : string) : Bool;
+
+// Unload aocr library
+procedure DynamicUnloadAocrLibrary();
+
+{function Is64Bit():Bool;}
+
+function IfThenElse(const cond:Bool; const valueTrue:System.PWideChar; const valueFalse:System.PWideChar): System.PWideChar;
+
+type
+
+func_type_com_asprise_ocr_version = function():PAnsiChar; stdcall;
+func_type_com_asprise_ocr_setup = function(queryOnly:Bool):Integer; stdcall;
+func_type_com_asprise_ocr_list_supported_langs = function():PAnsiChar; stdcall;
+func_type_com_asprise_ocr_start = function(lang:PAnsiChar; speed:PAnsiChar; propSpec:PAnsiChar; propSeparator:PAnsiChar; propKeyValueSeparator:PAnsiChar):LONGLONG; stdcall;
+func_type_com_asprise_ocr_stop = procedure(handle: LONGLONG); stdcall;
+func_type_com_asprise_ocr_recognize = function(handle: LONGLONG; imgFiles:PAnsiChar; pageIndex:Integer; startX:Integer; startY:Integer; width:Integer; height:Integer; recognizeType:PAnsiChar; outputFormat:PAnsiChar; propSpec:PAnsiChar; propSeparator:PAnsiChar; propKeyValueSeparator:PAnsiChar):PAnsiChar; stdcall;
+func_type_com_asprise_ocr_util_delete = procedure(handle: LONGLONG; isArray:Bool); stdcall;
+func_type_com_asprise_ocr_input_license = procedure(licenseeName:PAnsiChar; licenseCode:PAnsiChar); stdcall;
+
+var
+  aocrLibHandle: THandle;
+  func_com_asprise_ocr_version: func_type_com_asprise_ocr_version;
+  func_com_asprise_ocr_setup: func_type_com_asprise_ocr_setup;
+  func_com_asprise_ocr_list_supported_langs: func_type_com_asprise_ocr_list_supported_langs;
+  func_com_asprise_ocr_start: func_type_com_asprise_ocr_start;
+  func_com_asprise_ocr_stop: func_type_com_asprise_ocr_stop;
+  func_com_asprise_ocr_recognize: func_type_com_asprise_ocr_recognize;
+  func_com_asprise_ocr_util_delete: func_type_com_asprise_ocr_util_delete;
+  func_com_asprise_ocr_input_license: func_type_com_asprise_ocr_input_license;
+
+implementation
+
+// Load aocr library
+function DynamicLoadAocrLibrary(const pathToAocrLibraryFile : string) : Bool;
+begin
+    Writeln(sLineBreak + '------------- ASPRISE OCR - All Rights Reserved. Visit asprise.com -------------' + sLineBreak);
+    aocrLibHandle := LoadLibrary(PChar(pathToAocrLibraryFile));
+    if aocrLibHandle <> 0 then
+    begin
+      Writeln('AOCR library loaded: ' + pathToAocrLibraryFile);
+      @func_com_asprise_ocr_version := GetProcAddress(aocrLibHandle, GetModuleHandle(TEXT('aocr.dll')), 'com_asprise_ocr_version', '_com_asprise_ocr_version@0'));
+      @func_com_asprise_ocr_setup := GetProcAddress(aocrLibHandle, GetModuleHandle(TEXT('aocr.dll')), 'com_asprise_ocr_setup', '_com_asprise_ocr_setup@4'));
+      @func_com_asprise_ocr_list_supported_langs := GetProcAddress(aocrLibHandle, GetModuleHandle(TEXT('aocr.dll')), 'com_asprise_ocr_list_supported_langs', '_com_asprise_ocr_list_supported_langs@0'));
+      @func_com_asprise_ocr_start := GetProcAddress(aocrLibHandle,  GetModuleHandle(TEXT('aocr.dll')), 'com_asprise_ocr_start', '_com_asprise_ocr_start@20'));
+     @func_com_asprise_ocr_stop := GetProcAddress(aocrLibHandle, GetModuleHandle(TEXT('aocr.dll')), 'com_asprise_ocr_stop', '_com_asprise_ocr_stop@8'));
+      @func_com_asprise_ocr_recognize := GetProcAddress(aocrLibHandle, GetModuleHandle(TEXT('aocr.dll')), 'com_asprise_ocr_recognize', '_com_asprise_ocr_recognize@52'));
+      @func_com_asprise_ocr_util_delete := GetProcAddress(aocrLibHandle, IfThenElse(Is64Bit(), 'com_asprise_ocr_util_delete', '_com_asprise_ocr_util_delete@12'));
+      @func_com_asprise_ocr_input_license := GetProcAddress(aocrLibHandle, IfThenElse(Is64Bit(), 'com_asprise_ocr_input_license', '_com_asprise_ocr_input_license@8'));
+    end
+    else
+    begin
+      Writeln('ERROR: failed to load: ' + pathToAocrLibraryFile);
+      Writeln('Make sure the file exists. Contact support@asprise.com if you need assistance.');
+    end;
+
+{    if Is64Bit() then
+    begin
+      System.SetMXCSR($1F80); // fix floating point exceptions
+    end;  }
+
+    Result := aocrLibHandle <> 0;
+end;
+
+// Unload aocr library
+procedure DynamicUnloadAocrLibrary();
+begin
+  if aocrLibHandle <> 0 then
+  begin
+    FreeLibrary(aocrLibHandle);
+  end;
+end;
+
+
+{function Is64Bit() : Bool;
+begin
+    Result := sizeof(IntPtr) = 8;
+end;}
+
+function IfThenElse(const cond:Bool; const valueTrue:System.PWideChar; const valueFalse:System.PWideChar): System.PWideChar;
+begin
+  if cond then
+  begin
+    Result := valueTrue;
+  end
+  else
+  begin
+    Result := valueFalse;
+  end;
+end;
+
+end.

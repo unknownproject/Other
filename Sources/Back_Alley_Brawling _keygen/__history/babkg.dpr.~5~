@@ -1,0 +1,14 @@
+program babkg;
+
+uses
+  Forms,
+  Main in 'Main.pas' {KgnForm},
+  umd5 in 'umd5.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TKgnForm, KgnForm);
+  Application.Run;
+end.

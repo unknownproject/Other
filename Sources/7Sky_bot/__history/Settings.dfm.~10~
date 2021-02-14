@@ -1,0 +1,54 @@
+object SettingsForm: TSettingsForm
+  Left = 0
+  Top = 0
+  BorderIcons = [biMinimize, biMaximize]
+  BorderStyle = bsToolWindow
+  Caption = 'Settings'
+  ClientHeight = 218
+  ClientWidth = 269
+  Color = 33023
+  Ctl3D = False
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -9
+  Font.Name = 'Tahoma'
+  Font.Style = [fsBold]
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  PixelsPerInch = 96
+  TextHeight = 11
+  object IntervalLabel: TLabel
+    Left = 13
+    Top = 8
+    Width = 94
+    Height = 11
+    Caption = 'Interval [Seconds]'
+  end
+  object OKButton: TButton
+    Left = 8
+    Top = 43
+    Width = 105
+    Height = 15
+    Caption = 'ok'
+    TabOrder = 0
+    OnClick = OKButtonClick
+  end
+  object IntervalEdit: TMemo
+    Left = 8
+    Top = 20
+    Width = 105
+    Height = 17
+    Alignment = taCenter
+    Color = 13565951
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 3618815
+    Font.Height = -9
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    Lines.Strings = (
+      '15')
+    ParentFont = False
+    TabOrder = 1
+    WantReturns = False
+  end
+end

@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Delphi.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{44D57614-6DDA-4B1F-9D6A-AAC4FEB2532B}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Delphi.Personality>
+		<Source>
+			<Source Name="MainSource">the.pun.up.trn.dpr</Source>
+		</Source>
+		<FileVersion>
+			<FileVersion Name="Version">7.0</FileVersion>
+		</FileVersion>
+		<Compiler>
+			<Compiler Name="A">8</Compiler>
+			<Compiler Name="B">0</Compiler>
+			<Compiler Name="C">1</Compiler>
+			<Compiler Name="D">1</Compiler>
+			<Compiler Name="E">0</Compiler>
+			<Compiler Name="F">0</Compiler>
+			<Compiler Name="G">1</Compiler>
+			<Compiler Name="H">1</Compiler>
+			<Compiler Name="I">1</Compiler>
+			<Compiler Name="J">0</Compiler>
+			<Compiler Name="K">0</Compiler>
+			<Compiler Name="L">1</Compiler>
+			<Compiler Name="M">0</Compiler>
+			<Compiler Name="N">1</Compiler>
+			<Compiler Name="O">1</Compiler>
+			<Compiler Name="P">1</Compiler>
+			<Compiler Name="Q">0</Compiler>
+			<Compiler Name="R">0</Compiler>
+			<Compiler Name="S">0</Compiler>
+			<Compiler Name="T">0</Compiler>
+			<Compiler Name="U">0</Compiler>
+			<Compiler Name="V">1</Compiler>
+			<Compiler Name="W">0</Compiler>
+			<Compiler Name="X">1</Compiler>
+			<Compiler Name="Y">1</Compiler>
+			<Compiler Name="Z">1</Compiler>
+			<Compiler Name="ShowHints">True</Compiler>
+			<Compiler Name="ShowWarnings">True</Compiler>
+			<Compiler Name="UnitAliases">WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;</Compiler>
+			<Compiler Name="NamespacePrefix"></Compiler>
+			<Compiler Name="GenerateDocumentation">False</Compiler>
+			<Compiler Name="DefaultNamespace"></Compiler>
+			<Compiler Name="SymbolDeprecated">True</Compiler>
+			<Compiler Name="SymbolLibrary">True</Compiler>
+			<Compiler Name="SymbolPlatform">True</Compiler>
+			<Compiler Name="SymbolExperimental">True</Compiler>
+			<Compiler Name="UnitLibrary">True</Compiler>
+			<Compiler Name="UnitPlatform">True</Compiler>
+			<Compiler Name="UnitDeprecated">True</Compiler>
+			<Compiler Name="UnitExperimental">True</Compiler>
+			<Compiler Name="HResultCompat">True</Compiler>
+			<Compiler Name="HidingMember">True</Compiler>
+			<Compiler Name="HiddenVirtual">True</Compiler>
+			<Compiler Name="Garbage">True</Compiler>
+			<Compiler Name="BoundsError">True</Compiler>
+			<Compiler Name="ZeroNilCompat">True</Compiler>
+			<Compiler Name="StringConstTruncated">True</Compiler>
+			<Compiler Name="ForLoopVarVarPar">True</Compiler>
+			<Compiler Name="TypedConstVarPar">True</Compiler>
+			<Compiler Name="AsgToTypedConst">True</Compiler>
+			<Compiler Name="CaseLabelRange">True</Compiler>
+			<Compiler Name="ForVariable">True</Compiler>
+			<Compiler Name="ConstructingAbstract">True</Compiler>
+			<Compiler Name="ComparisonFalse">True</Compiler>
+			<Compiler Name="ComparisonTrue">True</Compiler>
+			<Compiler Name="ComparingSignedUnsigned">True</Compiler>
+			<Compiler Name="CombiningSignedUnsigned">True</Compiler>
+			<Compiler Name="UnsupportedConstruct">True</Compiler>
+			<Compiler Name="FileOpen">True</Compiler>
+			<Compiler Name="FileOpenUnitSrc">True</Compiler>
+			<Compiler Name="BadGlobalSymbol">True</Compiler>
+			<Compiler Name="DuplicateConstructorDestructor">True</Compiler>
+			<Compiler Name="InvalidDirective">True</Compiler>
+			<Compiler Name="PackageNoLink">True</Compiler>
+			<Compiler Name="PackageThreadVar">True</Compiler>
+			<Compiler Name="ImplicitImport">True</Compiler>
+			<Compiler Name="HPPEMITIgnored">True</Compiler>
+			<Compiler Name="NoRetVal">True</Compiler>
+			<Compiler Name="UseBeforeDef">True</Compiler>
+			<Compiler Name="ForLoopVarUndef">True</Compiler>
+			<Compiler Name="UnitNameMismatch">True</Compiler>
+			<Compiler Name="NoCFGFileFound">True</Compiler>
+			<Compiler Name="ImplicitVariants">True</Compiler>
+			<Compiler Name="UnicodeToLocale">True</Compiler>
+			<Compiler Name="LocaleToUnicode">True</Compiler>
+			<Compiler Name="ImagebaseMultiple">True</Compiler>
+			<Compiler Name="SuspiciousTypecast">True</Compiler>
+			<Compiler Name="PrivatePropAccessor">True</Compiler>
+			<Compiler Name="UnsafeType">False</Compiler>
+			<Compiler Name="UnsafeCode">False</Compiler>
+			<Compiler Name="UnsafeCast">False</Compiler>
+			<Compiler Name="OptionTruncated">True</Compiler>
+			<Compiler Name="WideCharReduced">True</Compiler>
+			<Compiler Name="DuplicatesIgnored">True</Compiler>
+			<Compiler Name="UnitInitSeq">True</Compiler>
+			<Compiler Name="LocalPInvoke">True</Compiler>
+			<Compiler Name="MessageDirective">True</Compiler>
+			<Compiler Name="CodePage"></Compiler>
+		</Compiler>
+		<Linker>
+			<Linker Name="MapFile">0</Linker>
+			<Linker Name="OutputObjs">0</Linker>
+			<Linker Name="GenerateHpps">False</Linker>
+			<Linker Name="ConsoleApp">1</Linker>
+			<Linker Name="DebugInfo">False</Linker>
+			<Linker Name="RemoteSymbols">False</Linker>
+			<Linker Name="GenerateDRC">False</Linker>
+			<Linker Name="MinStackSize">16384</Linker>
+			<Linker Name="MaxStackSize">1048576</Linker>
+			<Linker Name="ImageBase">4194304</Linker>
+			<Linker Name="ExeDescription"></Linker>
+		</Linker>
+		<Directories>
+			<Directories Name="OutputDir"></Directories>
+			<Directories Name="UnitOutputDir"></Directories>
+			<Directories Name="PackageDLLOutputDir"></Directories>
+			<Directories Name="PackageDCPOutputDir"></Directories>
+			<Directories Name="SearchPath"></Directories>
+			<Directories Name="Packages">vcl;rtl;vclx;VclSmp</Directories>
+			<Directories Name="Conditionals"></Directories>
+			<Directories Name="DebugSourceDirs"></Directories>
+			<Directories Name="UsePackages">False</Directories>
+		</Directories>
+		<Parameters>
+			<Parameters Name="RunParams"></Parameters>
+			<Parameters Name="HostApplication"></Parameters>
+			<Parameters Name="Launcher"></Parameters>
+			<Parameters Name="UseLauncher">False</Parameters>
+			<Parameters Name="DebugCWD"></Parameters>
+			<Parameters Name="Debug Symbols Search Path"></Parameters>
+			<Parameters Name="LoadAllSymbols">True</Parameters>
+			<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+		</Parameters>
+		<Language>
+			<Language Name="ActiveLang"></Language>
+			<Language Name="ProjectLang">$00000000</Language>
+			<Language Name="RootDir"></Language>
+		</Language>
+		<VersionInfo>
+			<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+			<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+			<VersionInfo Name="MajorVer">1</VersionInfo>
+			<VersionInfo Name="MinorVer">0</VersionInfo>
+			<VersionInfo Name="Release">0</VersionInfo>
+			<VersionInfo Name="Build">0</VersionInfo>
+			<VersionInfo Name="Debug">False</VersionInfo>
+			<VersionInfo Name="PreRelease">False</VersionInfo>
+			<VersionInfo Name="Special">False</VersionInfo>
+			<VersionInfo Name="Private">False</VersionInfo>
+			<VersionInfo Name="DLL">False</VersionInfo>
+			<VersionInfo Name="Locale">1033</VersionInfo>
+			<VersionInfo Name="CodePage">1252</VersionInfo>
+		</VersionInfo>
+		<VersionInfoKeys>
+			<VersionInfoKeys Name="CompanyName">unknown project</VersionInfoKeys>
+			<VersionInfoKeys Name="FileDescription"></VersionInfoKeys>
+			<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+			<VersionInfoKeys Name="InternalName"></VersionInfoKeys>
+			<VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys>
+			<VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+			<VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys>
+			<VersionInfoKeys Name="ProductName"></VersionInfoKeys>
+			<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+			<VersionInfoKeys Name="Comments"></VersionInfoKeys>
+		</VersionInfoKeys>
+		<DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="ALLUSERSPROFILE">'C:\ProgramData'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="APPDATA">'C:\Users\unknownproject\AppData\Roaming'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="BDS">'D:\Programming\TDLite'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="BDSPROJECTSDIR">'D:\Programming\TDLite\Projects'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="CG_BOOST_ROOT">'D:\Programming\DelphiXE\Embarcadero\RAD Studio\8.0\include\boost_1_39'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="CommonProgramFiles(x86)">'C:\Program Files (x86)\Common Files'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="CommonProgramFiles">'C:\Program Files (x86)\Common Files'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="CommonProgramW6432">'C:\Program Files\Common Files'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="COMPUTERNAME">'T3CHN0ID'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="ComSpec">'C:\Windows\system32\cmd.exe'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="DELPHI">'D:\Programming\TDLite'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="FP_NO_HOST_CHECK">'NO'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="HOMEDRIVE">'C:'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="HOMEPATH">'\Users\unknownproject'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="LOCALAPPDATA">'C:\Users\unknownproject\AppData\Local'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="LOGONSERVER">'\\T3CHN0ID'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="MOZ_PLUGIN_PATH">'C:\PROGRAM FILES (X86)\FOXIT SOFTWARE\FOXIT READER\plugins\'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="NUMBER_OF_PROCESSORS">'2'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="OS">'Windows_NT'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="Path">'C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\CollabNet\Subversion Client;D:\Programming\DelphiXE\Embarcadero\RAD Studio\8.0\bin;C:\Users\Public\Documents\RAD Studio\8.0\Bpl;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Programming\TDLite;D:\Programming\TDLite\Bin'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PATHEXT">'.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PROCESSOR_ARCHITECTURE">'x86'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PROCESSOR_ARCHITEW6432">'AMD64'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PROCESSOR_IDENTIFIER">'Intel64 Family 6 Model 15 Stepping 11, GenuineIntel'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PROCESSOR_LEVEL">'6'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PROCESSOR_REVISION">'0f0b'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="ProgramData">'C:\ProgramData'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="ProgramFiles(x86)">'C:\Program Files (x86)'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="ProgramFiles">'C:\Program Files (x86)'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="ProgramW6432">'C:\Program Files'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PSModulePath">'C:\Windows\system32\WindowsPowerShell\v1.0\Modules\'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="PUBLIC">'C:\Users\Public'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="SESSIONNAME">'Console'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="SystemDrive">'C:'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="SystemRoot">'C:\Windows'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="TEMP">'C:\Users\UNKNOW~1\AppData\Local\Temp'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="TMP">'C:\Users\UNKNOW~1\AppData\Local\Temp'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="USERDOMAIN">'t3cHn0iD'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="USERNAME">'unknownproject'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="USERPROFILE">'C:\Users\unknownproject'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="windir">'C:\Windows'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="CLASSPATH">'.;C:\Program Files (x86)\QuickTime\QTSystem\QTJava.zip'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="QTJAVA">'C:\Program Files (x86)\QuickTime\QTSystem\QTJava.zip'</DebugSysEnvironmentVariables>
+			<DebugSysEnvironmentVariables Name="SN_PATH">'D:\Cracking toolZ\Debuggers\pssn\bin'</DebugSysEnvironmentVariables>  <DebugSysEnvironmentVariables Name="ASKOCFG">'C:\Kagan\Config'</DebugSysEnvironmentVariables>
+      <DebugSysEnvironmentVariables Name="VS100COMNTOOLS">'D:\Programming\Microsoft Visual Studio 10.0\Common7\Tools\'</DebugSysEnvironmentVariables>
+    </DebugSysEnvironmentVariables>
+		<DebugEnvironmentVariables>
+			<DebugEnvironmentVariables Name="Path">'C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\CollabNet\Subversion Client;D:\Programming\DelphiXE\Embarcadero\RAD Studio\8.0\bin;C:\Users\Public\Documents\RAD Studio\8.0\Bpl;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Programming\TDLite;D:\Programming\TDLite\Bin'</DebugEnvironmentVariables>
+		</DebugEnvironmentVariables>  <Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dcldb100.bpl">Borland Database Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dcldbx100.bpl">Borland dbExpress Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclmid100.bpl">Borland MyBase DataAccess Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclbde100.bpl">Borland BDE DB Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dbx100.bpl">Borland SQL Explorer UI Package</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclnet100.bpl">Borland Internet Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclsmpedit100.bpl">Borland Editor Script Enhancements</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclemacsedit100.bpl">Borland Editor Emacs Enhancements</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclmlwiz100.bpl">Borland Markup Language Wizards</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\applet100.bpl">Borland Control Panel Applet Package</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclado100.bpl">Borland ADO DB Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dcltee100.bpl">TeeChart Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dcldbxcds100.bpl">Borland SimpleDataset Component (DBX)</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclie100.bpl">Internet Explorer Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\dclact100.bpl">Borland ActionBar Components</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Bin\HelpLink.bpl">Help Link for Delphi</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Projects\Bpl\ZipMasterD10.bpl">ZipMaster 1.79</Excluded_Packages>
+      <Excluded_Packages Name="D:\Programming\TDLite\Projects\Bpl\ATViewerD2005.bpl">File D:\Programming\TDLite\Projects\Bpl\ATViewerD2005.bpl not found</Excluded_Packages>
+    </Excluded_Packages>
+  </Delphi.Personality>
+</BorlandProject>
