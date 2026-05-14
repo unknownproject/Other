@@ -56,6 +56,8 @@ The fraudulent platform utilizes mainstream enterprise infrastructure to mask it
 
 \* \*\*IP Architecture:\*\* Connected to Microsoft Azure nodes (e.g., `52.178.214.89`, Western Europe region).
 
+* **Media Processing Pipeline:** The backend accepts and processes ultra-high-resolution assets up to 4096×4096 pixels with a file size ceiling of 10MB. This indicates a high-fidelity media pipeline optimized for preserving raw facial biometric features (potentially utilized for training internal generative AI/deepfake datasets).
+
 
 
 \#### Vulnerability Discovered: Image Role-Swapping UI Bypass
