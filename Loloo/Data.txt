@@ -1,0 +1,203 @@
+=== Функциональность поддельного сайта знакомств Loloo [фишинговый клон Beboo] ===
+=============================
+Защитные механизмы:
+WAF - Cloudflare.
+Обнаружение нодов TOR и VPN.
+=============================
+Страница входа - https://m.loloo.ru/
+Доступные методы:
+https://oauth.vk.com/authorize?client_id=7751945&scope=email&redirect_uri=https://m.loloo.ru/registration/social/avk&display=popup&v=5.26&response_type=code
+https://connect.mail.ru/oauth/authorize?client_id=752732&response_type=code&redirect_uri=https://m.loloo.ru/registration/social/amail
+http://www.odnoklassniki.ru/oauth/authorize?client_id=1250228736&scope=VALUABLE_ACCESS&response_type=code&redirect_uri=https://m.loloo.ru/registration/social/aok&layout=w&state=1
+https://oauth.yandex.ru/authorize?client_id=50cae5899f9f4a028792ddc3073561f4&response_type=code&state=1&redirect_uri=https://m.loloo.ru/registration/social/aya
+https://t.me/lolooRuBot?start=auth
+Email/Password
+
+В случае попытки удаления аккаунта:
+POST запрос уходит на https://m.loloo.ru/?check&stoken=20c30d75c3961aa6c03f589df45e548218af21315ae7151daac604d00ca26bbb
+Используются 4 параметра - strange=0&redirect=&email=&password=
+=============================
+=============================
+Восстановление пароля - https://m.loloo.ru/passrecover
+POST запрос уходит на https://m.loloo.ru/passrecover?check
+Используются 2 параметра - email=XXXXXXXXX@gmail.com&verify=4663
+Редиректит на https://m.loloo.ru/passrecover/check?eyJpdiI6Iit5blcyZTJXaERoWTZmajVaWXJkVkE9PSIsInZhbHVlIjoiV3lsdXU0NFEyY2lHRjRvTHBSZmxNa2hvSFBSeitkUHFBUVQzTUt3RXI1YURCSzZhdllJWHhsbGl1NjNhUVZvUVl1REVETWw0NFhGSTVicm9LOGJnWWc9PSIsIm1hYyI6ImI2ZjJhOGYzMGFjNDc5MzdiZjYxNGQ4MTkxNDBlNGI1OWQyMjhjMjdkOTdlOTNmN2Q2NjVlZjBmNmFmMzA4M2EifQ%3D%3D=
+
+Base64-декодированный текст безымянного аргумента
+
+{
+  "iv":"+ynW2e2WhDhY6fj5ZYrdVA==",
+  "value":"Wyluu44Q2ciGF4oLpRflMkhoHPRz+dPqAQT3MKwEr5aDBK6avYIXxlliu63aQVoQYuDEDMl44XFI5broK8bgYg==",
+  "mac":"b6f2a8f30ac47937bf614d819140e4b59d228c27d97e93f7d665ef0f6af3083a"
+}
+
+Капча берется по ссылке - https://m.loloo.ru/captcha/default [GET]
+На email приходит ссылка для возможности изменения пароля - https://loloo.ru/access/d5db667793faaf29e8098bb7da9a5102/31202367/c34a5e31fbd926214e6cc9e0c5555cf8
+Редиректит на https://loloo.ru/passrecover/success [GET] с уведомлением об успешной смене пароля.
+На email в открытом виде приходит новый пароль. 
+=============================
+Неиндексируемые ссылки:
+https://m.loloo.ru/alert/
+https://m.loloo.ru/api [Напрямую использует логотип и форму входа Beboo]
+https://m.loloo.ru/fast/advert?area=advAreaAllPages&country=RU&gender=M&landing=4&userId=31202367&r=95520.09968103564 [подгружается методом POST вместе с GET запросом к /api]
+=============================
+Скрытая галерея [обнаруживается только сканом директорий] -> https://m.loloo.ru/gallery/
+=============================
+Источники фото [прямой рип ссылок с поддомена beboo] -> https://static1.beboo.ru/datas/photos/180x180/1a/f9/9566273fc20dd367ac24c5d201b6.jpg?2
+=============================
+Ссылки, редиректящие на фишинговый скрипт -> https://m.loloo.ru/search | https://m.loloo.ru/meets | https://m.loloo.ru/messeger | https://m.loloo.ru/profile/edit
+=============================
+Бот в Максе для отправки кода подтверждения -> https://max.ru/id9728070602_2_bot?start=eyJ1c2VySWQiOjMxMjAyMzY3LCJzZWNyZXQiOiI0OTUzZTAzZGRiOTM3NzJhZDA0NjlhN2ViMmQyMjgyZSIsInNpdGVWZXJzaW9uIjoibW9iaWxlIn0=
+
+Base64-декодированный текст аргумента start
+
+{
+  "userId": 31202367,
+  "secret": "4953e03ddb93772ad0469a72eb2d2282e",
+  "siteVersion": "mobile"
+}
+=============================
+Логика фишингового скрипта [Для проверки использовался логический подбор номеров без брутфорса: +79153388338 | +79159737893]:
+1. Проверяется наличие номера в базе.
+2. Если есть - отправляется код в телеграм.
+3. После ввода любого 4 значного кода выдается фальшивое сообщение об ошибке.
+-----------------------------
+2.2 Если номера нет в базе - предлагается самостоятельно совершить звонок на номер +7 800 777-16-27.
+Таким образом, проверятся доступность номера, отслеживается местоположение абонента.
+2.3 При подтверждении исходящего звонка, путем нажатия кнопки на форме, происходит возврат к первому шагу.
+=============================
+Скрытые переменные [https://m.loloo.ru/api]
+cloudpaymentsId = "pk_2c3b9aa30dd13304eb77f04ea5b10";
+cfCaptchaSiteKey = "0x4AAAAAAAjB1om1xat8bhV9";
+=============================
+Скрытые функции - Обход фишинговых пэйволлов [Доступны и обнаружены после перехода по https://m.loloo.ru/alert/]
+Настройки - https://m.loloo.ru/settings
+-----------------------------
+1. Смена email - https://m.loloo.ru/settings/email
+POST запрос уходит на https://m.loloo.ru/settings/auth?save=
+Используются 2 параметра - stoken=ff2fa71f9fde76a965e291ed855cc2ff508417315d60c2c401119ca6dbee3c4a&email=
+[Скрытый параметр stoken всегда = ff2fa71f9fde76a965e291ed855cc2ff508417315d60c2c401119ca6dbee3c4a]
+Если email не попал еще в их базу - выдается предсказуемая ошибка.
+-----------------------------
+2. Смена пароля - https://m.loloo.ru/settings/password
+POST запрос уходит на https://m.loloo.ru/settings/password?save
+Используются 4 параметра - stoken=ff2fa71f9fde76a965e291ed855cc2ff508417315d60c2c401119ca6dbee3c4a&currentPassword=1&password=1&password2=1
+Уязвимость с токеном - аналогично. Выдает ошибку неправильного пароля постоянно.
+-----------------------------
+3. Невидимка - https://m.loloo.ru/settings/invisible
+POST запрос уходит на https://m.loloo.ru/settings/invisible?save&back=/settings/invisible
+Используются 4 параметра - hideInSearch=1&hideFromNonAuth=1&invisible=1&hideLastVisit=1
+Редиректит на очередной пейволл - https://m.loloo.ru/paid/vip/invisible?back=/settings/invisible
+[Имеются два скрытых параметра - back=/settings/invisible и usl=14]
+=============================
+При добавлении параметра usl=14 к POST запросу на https://m.loloo.ru/settings/invisible?save&back=/settings/invisible происходит двойной редирект:
+https://m.loloo.ru/paid/vip/invisible?back=/settings/invisible [GET]
+->
+https://m.loloo.ru/signup [POST]
+=============================
+Логика платежа через СБП:
+https://m.loloo.ru/buy/gotoPayment?back=/&usl=14&autoUsl=0&amount=199&type=sbp
+->
+https://yoomoney.ru/checkout/payments/v2/contract/sbp?orderId=319fe644-000f-5001-8000-1dfc3f64e18f
+->
+https://m.loloo.ru/unp/success?order=4620675&type=ukassa&fromApp=0 [Отказ от платежа]
+->
+Назад к фишинговой форме
+=============================
+Логика платежа через ввод номера карты:
+->
+https://m.loloo.ru/paid/getCpOrderId?jsoncallback=jQuery17206254298283056974_1779294694075 [POST]
+З параметра - back=/settings/invisible&usl=14&amount=7
+Возвращенное значение:
+jQuery17206254298283056974_1779294694075({"response":{"publicId":"pk_2c3b9aa30dd13304eb77f04ea5b10","description":"VIP \u043d\u0430 7 \u0434\u043d\u0435\u0439","amount":199,"currency":"RUB","invoiceId":"7336590","accountId":31202367,"requireEmail":false,"skin":"mini"}})
+->
+https://widget.cloudpayments.ru/bundles/cloudpayments
+->
+https://widget.cloudpayments.ru/bundles/cloudpayments/
+->
+Никакой реакции при закрытии виджета или таймаута в 20 минут.
+-----------------------------
+4. Уведомления - https://m.loloo.ru/settings/notifications
+POST запрос уходит на https://m.loloo.ru/settings/notifications?save
+Используются 20 параметров
+news=1&webnews=1&messages=1&webmessages=1&warnings=1&webwarnings=1&newUsers=1&webnewUsers=1&wantTalk=1&webwantTalk=1&guests=1&webguests=1&newSympathies=1&webnewSympathies=1&newAddFavorits=1&webnewAddFavorits=1&wantMeet=1&webwantMeet=1&offer=1&weboffer=1
+-----------------------------
+5. Хотят познакомиться - https://m.loloo.ru/settings/wantTalkStatus
+POST запрос уходит на https://m.loloo.ru/settings/wantTalkStatus?save&back=/settings/wantTalkStatus
+Используется 1 параметр - wantTalkStatus=1
+-----------------------------
+6. VIP-статус - https://m.loloo.ru/paid/vip?back=/settings/index
+Аналогично Невидимке [3].
+-----------------------------
+7. Стиль сайта - https://m.loloo.ru/settings/other
+POST запрос уходит на https://m.loloo.ru/settings/other?save
+Используется 2 параметра - stoken=ff2fa71f9fde76a965e291ed855cc2ff508417315d60c2c401119ca6dbee3c4a&style=0
+Токен уязвим аналогично [1] и [2] 
+-----------------------------
+8. Заблокированные - https://m.loloo.ru/settings/blocked
+-----------------------------
+9. Служба поддержки - https://m.loloo.ru/feedback
+POST запрос уходит на https://m.loloo.ru/feedback?save
+=============================
+------geckoformboundaryb895dce9b576b6433ac8a29cce9ae5d6
+Content-Disposition: form-data; name="screen"
+
+2560x1440
+------geckoformboundaryb895dce9b576b6433ac8a29cce9ae5d6
+Content-Disposition: form-data; name="message"
+
+test
+------geckoformboundaryb895dce9b576b6433ac8a29cce9ae5d6
+Content-Disposition: form-data; name="file"; filename="18plus_disc.png"
+Content-Type: image/png
+[Тело файла]
+-> Редирект на https://m.loloo.ru/feedback?success
+=============================
+Прямая ссылка на прикрепленный файл - ведет напрямую на Beboo:
+https://beboo.ru//datas/file_depositary/31202367/3fba7fd4.png
+
+Ответ поддержки [noreply@loloo.ru]:
+Содержит ссылку и фальшивую дату отправки.
+Переход по ссылке сводит всё к фишинговой странице в таком порядке:
+https://loloo.ru/access/d7fd0ec045e5a29ac99e9d7ac9521c65/31202367/c34a5e31fbd926214e6cc9e0c5555cf8/0
+->
+https://loloo.ru/messeger/join
+->
+Назад к фишинговой форме
+=============================
+10. Удаление анкеты - https://m.loloo.ru/profile/delete
+GET запрос уходит на https://m.loloo.ru/profile/delete?do&stoken=ff2fa71f9fde76a965e291ed855cc2ff508417315d60c2c401119ca6dbee3c4a
+Тот самый знакомый токен из [1], [2] и [7].
+->
+https://m.loloo.ru/messages/successDeleted [Фальшивая заглушка об успешном удалении]
+=============================
+Фоновая активность - кража данных c Beboo [user.min.js] - Требует активной пользовательской сессии.
+
+wss://ws9.beboo.ru/echo/websocket [GET]
+
+REQ Headers
+Sec-WebSocket-Version: 13
+Origin: https://m.loloo.ru
+Sec-WebSocket-Extensions: permessage-deflate
+Sec-WebSocket-Key: kcC7Nb3IS5SVxlPcaTTgWg==
+Sec-Fetch-Dest: empty
+Sec-Fetch-Mode: websocket
+Sec-Fetch-Site: cross-site
+
+RESP Headers
+Sec-WebSocket-Accept: yZgEKwA/X4UrMbixtddHiei2ImQ=
+cf-cache-status: DYNAMIC
+Server: cloudflare
+CF-RAY: 9fecf6f92aa59dc1-DME
+
+{"action":"ready","userId":31202367,"hash":"5debb500ada6782b87cb44bafa4e6b5b","country":"RU"}
+{"event":"ready"}
+{"event":"newPhotoTape","type":"OTHER","userId":30271454,"id":"1485413","nick":"Viktoriia","age":41,"town":"Alfdorf","photo":"https://static5.beboo.ru/datas/photos/80x80/1f/ca/92068628524d2471f42ec0fded57.jpg?1"}
+=============================
+
+Функциональность данного сайта (и его мобильной версии m.loloo.ru) сводится к краже персональных данных, загрузке файлов на ресурсы Beboo и обогащению за счет вашей инфраструктуры.
+Причем при загрузке файлов, платежах, email'ах и ботах фигурирует один и тот же ID - 31202367. И, как я понимаю, этот аккаунт создался или был создан автоматически для всех вышеперечисленных целей.
+
+Вся персональная информация, приведенная здесь, использовалась исключительно в оценочных и исследовательских целях.
+
+В приложенном архиве "loloo.zip" содержится дамп внутренних ассетов, полученный путем прямой загрузки html страниц через веб-браузер.
